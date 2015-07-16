@@ -15,6 +15,7 @@ public class HUDController : MonoBehaviour {
 		levelValue.GetComponent<Text>().text = "LEVEL " + newLevel;
 	}
 
+
 	// Use this for initialization
 	void Start () {
 	
@@ -37,7 +38,7 @@ public class HUDController : MonoBehaviour {
 		RectTransform barTr = levelBar.GetComponent<RectTransform> ();
 		float ratio = gc.score / gc.scoreTarget;
 		
-		barTr.anchoredPosition = new Vector2 (82.5f * ratio, barTr.anchoredPosition.y);
-		barTr.sizeDelta = new Vector2 (165.0f * ratio, barTr.sizeDelta.y);
+		barTr.anchoredPosition = new Vector2 (120.0f * ratio, barTr.anchoredPosition.y);
+		barTr.sizeDelta = new Vector2 (240.0f * ratio, barTr.sizeDelta.y);
 	}
 }

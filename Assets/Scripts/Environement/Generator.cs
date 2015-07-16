@@ -43,7 +43,11 @@ public class Generator : MonoBehaviour {
 		InitialSpawn ();
 	}
 
-	void InitialSpawn() {
+	public void Clear() {
+
+	}
+
+	public void InitialSpawn() {
 		float lastHeight = 0;
 
 		activeGenerationScript = generationScripts [0] as IGenerationScript;
@@ -62,6 +66,9 @@ public class Generator : MonoBehaviour {
 		//Transform[] ts = spawnParent.GetComponentsInChildren<Transform>();
 		GameObject lastGo = null;
 		bool notDeleted = false;
+
+		if (GameController.isPaused)
+			return;
 
 		while (!notDeleted) {
 			notDeleted = true;
