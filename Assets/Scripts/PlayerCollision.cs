@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerCollision : MonoBehaviour {
 
+	public GameController gc;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -16,8 +18,9 @@ public class PlayerCollision : MonoBehaviour {
 	void OnTriggerEnter(Collider col) {
 
 		if (col.tag == "Collider") {
+			Debug.Log ("Collision");
+			gc.OnPlayerCollision();
 		}
-		Debug.Log ("Collision");
 	}
 
 	void OnTriggerExit() {

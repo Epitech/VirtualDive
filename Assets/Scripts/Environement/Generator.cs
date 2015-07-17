@@ -4,9 +4,16 @@ using System.Collections.Generic;
 
 public class Generator : MonoBehaviour {
 
+	[System.Serializable]
+	public class GameObjectChance
+	{
+		public int chance;
+		public GameObject obj;
+	}
+
 	// Generation containers
-	public GameObject[] wallsPrefabs;
-	public GameObject[] collidersPrefabs;
+	public GameObjectChance[] wallsPrefabs;
+	public GameObjectChance[] collidersPrefabs;
 	public List<Tuple<int, IGenerationScript>> generationScripts;
 	
 	// Generation parameters
@@ -35,28 +42,47 @@ public class Generator : MonoBehaviour {
 		generationScripts = new List<Tuple<int, IGenerationScript>>();
 
 		generationScripts.Add (new Tuple<int, IGenerationScript>(50, new DefaultGeneration (this)));
-		generationScripts.Add (new Tuple<int, IGenerationScript>(25, new RotationGeneration (this)));
-        generationScripts.Add (new Tuple<int, IGenerationScript>(25, new ScaleGeneration (this)));
+		//generationScripts.Add (new Tuple<int, IGenerationScript>(25, new RotationGeneration (this)));
+        //generationScripts.Add (new Tuple<int, IGenerationScript>(25, new ScaleGeneration (this)));
 		activeGenerationScript = null;
 
-		colliderGenerationTime = controller.collisionGenerationTime;
+		Clear ();
 		InitialSpawn ();
 	}
 
+	// Reset all default data
 	public void Clear() {
+		scaleX = 1.0f;
+		scaleY = 1.0f;
+		rotation = 0.0f;
+		colliderGenerationTime = controller.collisionGenerationTime;
 
+		while (generatedObjects.Count > 0) {
+			GameObject obj = generatedObjects[0] as GameObject;
+
+			generatedObjects.Remove (obj);
+			Destroy (obj);
+		}
 	}
 
 	public void InitialSpawn() {
 		float lastHeight = 0;
+		GameObject prevObj = null;
 
 		activeGenerationScript = generationScripts [0] as IGenerationScript;
 
 		for (float i = spawnLocation.transform.position.y; i < destroyLocation.transform.position.y; i += lastHeight) {
-
 			GameObject obj = GenerateWall();
-			obj.transform.position += (new Vector3 (0, -i, 0));
-			lastHeight = controller.offsetY;
+
+			Debug.Log("Create at low=" + obj.transform.Find("LowerBound").localPosition.y + " i=" + i + " h=" + lastHeight);
+			if (prevObj) {
+				obj.transform.position = (new Vector3 (0, i - obj.transform.Find("LowerBound").localPosition.y, 0));
+				lastHeight = obj.transform.Find("UpperBound").localPosition.y - obj.transform.Find("LowerBound").localPosition.y;
+			} else {
+				obj.transform.position = (new Vector3 (0, i, 0));
+				lastHeight = obj.transform.Find("UpperBound").localPosition.y;
+			}
+			prevObj = obj;
 
 		}
 	}
@@ -97,17 +123,16 @@ public class Generator : MonoBehaviour {
 			float yDiff = spawnLocation.transform.position.y;
 
 			if (lastGo) {
-				yDiff = lastGo.transform.position.y -
+				yDiff = lastGo.transform.position.y +
 					lastGo.transform.Find("LowerBound").transform.localPosition.y -
-					obj.transform.Find("UpperBound").transform.localPosition.y +
-					obj.transform.Find("LowerBound").transform.localPosition.y;
+					obj.transform.Find("UpperBound").transform.localPosition.y;
 			}
 			obj.transform.position = new Vector3(spawnLocation.transform.position.x, yDiff, spawnLocation.transform.position.z);
 		}
 		colliderGenerationTime -= Time.deltaTime;
 		if (colliderGenerationTime < 0) {
 			colliderGenerationTime = controller.collisionGenerationTime;
-			GenerateCollider();
+			//GenerateCollider();
 		}
 		UpdateGenerationScript ();
 	}
@@ -134,7 +159,8 @@ public class Generator : MonoBehaviour {
 		if (!obj.transform.Find ("UpperBound")) {
 			return (false);
 		}
-		float size = obj.transform.Find("UpperBound").position.y - obj.transform.Find("LowerBound").position.y;
+		float size = obj.transform.Find("UpperBound").localPosition.y - obj.transform.Find("LowerBound").localPosition.y;
+
 
 		if (obj.transform.position.y > spawnLocation.transform.position.y + size)
 			return (true);
@@ -142,7 +168,15 @@ public class Generator : MonoBehaviour {
 	}
 
 	public GameObject GenerateWall() {
-		GameObject prefab = wallsPrefabs[Random.Range(0, wallsPrefabs.Length)];
+		GameObject prefab = null;
+		while (prefab == null) {
+			GameObjectChance goc = wallsPrefabs[Random.Range(0, wallsPrefabs.Length)];
+
+			if (Random.Range(0, 100) < goc.chance) {
+				prefab = goc.obj;
+			}
+		}
+
 		GameObject obj = Instantiate<GameObject> (prefab);
 		
 		generatedObjects.Add (obj);
@@ -157,7 +191,15 @@ public class Generator : MonoBehaviour {
 	}
 
 	public GameObject GenerateCollider() {
-		GameObject prefab = collidersPrefabs[Random.Range(0, collidersPrefabs.Length)];
+		GameObject prefab = null;
+		while (prefab == null) {
+			GameObjectChance goc = collidersPrefabs[Random.Range(0, collidersPrefabs.Length)];
+			
+			if (Random.Range(0, 100) < goc.chance) {
+				prefab = goc.obj;
+			}
+		}
+
 		GameObject obj = Instantiate<GameObject> (prefab);
 
 		generatedObjects.Add (obj);

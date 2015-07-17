@@ -18,6 +18,10 @@ public class MovementController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (GameController.gameState != GameState.PLAYING)
+			return;
+		if (GameController.isPaused == true)
+			return;
 		if (Input.GetAxis("Horizontal") > 0)
 		{
 			body.AddForce(new Vector3(xVelocity, 0, 0));
