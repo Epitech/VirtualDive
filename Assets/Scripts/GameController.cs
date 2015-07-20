@@ -13,10 +13,15 @@ public enum GameState {
 public class GameController : MonoBehaviour {
 
 	public Generator generator;
-	public HUDController hud;
-	public UIController ui;
+	public UIController uiDefault;
+	public UIController uiOculus;
 	public GameObject playerSpawn;
+
+	// Active player controller
 	public GameObject player;
+
+	// Activer UI controller
+	public UIController ui;
 
 	// Parameters of the game
 	public float collisionGenerationTime = 1.0f;
@@ -30,6 +35,10 @@ public class GameController : MonoBehaviour {
 	public float score = 0.0f;
 	public float scoreTarget = 100.0f;
 
+	private int defCurrentLevel;
+	private float defMoveSpeedY;
+	private float defMoveSpeedIncr;
+
 	// Global static informations
 	public static GameState gameState = GameState.NONE;
 	public static GameState nextGameState = GameState.MAIN_MENU;
@@ -37,9 +46,12 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		ui = uiOculus;
 		if (collisionGenerationTime == 0)
 			collisionGenerationTime = 1.0f;
-
+		defCurrentLevel = currentLevel;
+		defMoveSpeedY = moveSpeedY;
+		defMoveSpeedIncr = moveSpeedIncr;
 	}
 
 	void PauseGame() {
@@ -59,7 +71,7 @@ public class GameController : MonoBehaviour {
 		finalScore += score;
 		score = 0;
 		scoreTarget *= 2;
-		hud.OnLevelUp (currentLevel);
+		ui.hud.OnLevelUp (currentLevel);
 	}
 
 	// Update is called once per frame
@@ -99,7 +111,7 @@ public class GameController : MonoBehaviour {
 				isPaused = true;
 				Time.timeScale = 1.0f;
 				ui.ShowGameStatePanel (nextGameState);
-				hud.UpdateGameOverHUD(this);
+				ui.hud.UpdateGameOverHUD(this);
 				break;
 			default:
 				break;
@@ -107,16 +119,16 @@ public class GameController : MonoBehaviour {
 			gameState = nextGameState;
 			nextGameState = GameState.NONE;
 		}
-		hud.UpdateHUD (this);
+		ui.hud.UpdateHUD (this);
 	}
 
 	public void ResetGame() {
-		currentLevel = 1;
+		currentLevel = defCurrentLevel;
 		timeSpent = 0.0f;
 		finalScore = 0.0f;
 		score = 0.0f;
 		scoreTarget = 100.0f;
-		moveSpeedY = 1.0f;
+		moveSpeedY = defMoveSpeedY;
 		player.transform.position = playerSpawn.transform.position;
 		player.GetComponent<Rigidbody> ().Sleep ();
 		generator.Clear ();

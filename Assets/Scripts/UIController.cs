@@ -17,6 +17,8 @@ public class UIController : MonoBehaviour {
 	public GameObject panelMainMenu;
 	public GameObject panelFade;
 
+	public HUDController hud;
+
 	// When a fading is in progress, lock ui states
 	public bool uiLocked = false;
 	public FadeState state = FadeState.NONE;
