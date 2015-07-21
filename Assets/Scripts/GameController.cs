@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using VR = UnityEngine.VR;
 
 public enum GameState {
 	NONE,
@@ -11,10 +12,15 @@ public enum GameState {
 };
 
 public class GameController : MonoBehaviour {
-
+	
 	public Generator generator;
 	public UIController uiDefault;
 	public UIController uiOculus;
+
+	public GameObject cameraDefault;
+	public GameObject cameraOculus;
+	public OVRCharacterController ovrCharacter;
+
 	public GameObject playerSpawn;
 
 	// Active player controller
@@ -43,10 +49,23 @@ public class GameController : MonoBehaviour {
 	public static GameState gameState = GameState.NONE;
 	public static GameState nextGameState = GameState.MAIN_MENU;
 	public static bool isPaused = true;
+	public static bool enableRift = false;
 
 	// Use this for initialization
 	void Start () {
-		ui = uiOculus;
+		if (VR.VRDevice.isPresent && enableRift) {
+			GameObject.Find("UIs").transform.FindChild("UI_OCULUS").gameObject.SetActive(true);
+			ui = uiOculus;
+			cameraOculus.SetActive(true);
+			cameraDefault.SetActive(false);
+			ovrCharacter.enabled = true;
+		} else {
+			GameObject.Find("UIs").transform.FindChild("UI").gameObject.SetActive(true);
+			ui = uiDefault;
+			cameraOculus.SetActive(false);
+			cameraDefault.SetActive(true);
+			ovrCharacter.enabled = false;
+		}
 		if (collisionGenerationTime == 0)
 			collisionGenerationTime = 1.0f;
 		defCurrentLevel = currentLevel;
@@ -167,7 +186,8 @@ public class GameController : MonoBehaviour {
 	public void OnMenuExitClicked() {
 		if (ui.uiLocked)
 			return;
-		System.Environment.Exit (0);
+		Debug.Log ("Bye");
+		//System.Environment.Exit (0);
 	}
 	
 	public void OnMenuResumeClicked() {

@@ -42,8 +42,8 @@ public class Generator : MonoBehaviour {
 		generationScripts = new List<Tuple<int, IGenerationScript>>();
 
 		generationScripts.Add (new Tuple<int, IGenerationScript>(50, new DefaultGeneration (this)));
-		//generationScripts.Add (new Tuple<int, IGenerationScript>(25, new RotationGeneration (this)));
-        //generationScripts.Add (new Tuple<int, IGenerationScript>(25, new ScaleGeneration (this)));
+		generationScripts.Add (new Tuple<int, IGenerationScript>(25, new RotationGeneration (this)));
+        generationScripts.Add (new Tuple<int, IGenerationScript>(25, new ScaleGeneration (this)));
 		activeGenerationScript = null;
 
 		Clear ();
@@ -131,7 +131,7 @@ public class Generator : MonoBehaviour {
 		colliderGenerationTime -= Time.deltaTime;
 		if (colliderGenerationTime < 0) {
 			colliderGenerationTime = controller.collisionGenerationTime;
-			//GenerateCollider();
+			GenerateCollider();
 		}
 		UpdateGenerationScript ();
 	}
@@ -200,10 +200,14 @@ public class Generator : MonoBehaviour {
 		}
 
 		GameObject obj = Instantiate<GameObject> (prefab);
-
+		Rigidbody rbd = obj.GetComponent<Rigidbody> ();
 		generatedObjects.Add (obj);
 		obj.transform.position = spawnLocation.transform.position;
 		obj.transform.SetParent (spawnParent.transform);
+		if (rbd) {
+			rbd.AddForce(Random.Range(-10.0f, 10.0f), 0, Random.Range(-10.0f, 10.0f)); 
+			rbd.angularVelocity.Set (Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
+		}
 		return (obj);
 	}
 
