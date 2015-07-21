@@ -73,8 +73,7 @@ public class Generator : MonoBehaviour {
 
 		for (float i = spawnLocation.transform.position.y; i < destroyLocation.transform.position.y; i += lastHeight) {
 			GameObject obj = GenerateWall();
-
-			Debug.Log("Create at low=" + obj.transform.Find("LowerBound").localPosition.y + " i=" + i + " h=" + lastHeight);
+		
 			if (prevObj) {
 				obj.transform.position = (new Vector3 (0, i - obj.transform.Find("LowerBound").localPosition.y, 0));
 				lastHeight = obj.transform.Find("UpperBound").localPosition.y - obj.transform.Find("LowerBound").localPosition.y;

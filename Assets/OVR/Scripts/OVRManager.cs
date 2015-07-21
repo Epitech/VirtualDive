@@ -332,7 +332,7 @@ public class OVRManager : MonoBehaviour
 			tracker = new OVRTracker();
 
 		if (resetTrackerOnLoad)
-			display.RecenterPose();
+			display.RecenterPose ();
 	}
 
 	private void OnEnable()
