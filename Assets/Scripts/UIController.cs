@@ -42,7 +42,7 @@ public class UIController : MonoBehaviour {
 		case GameState.MAIN_MENU:
 			HideAll ();
 			panelMainMenu.SetActive(true);
-			events.SetSelectedGameObject(panelMainMenu.transform.FindChild("Buttons").FindChild("PlayBtn").gameObject);
+			//events.SetSelectedGameObject(panelMainMenu.transform.FindChild("Buttons").FindChild("PlayBtn").gameObject);
 			break;
 		case GameState.GAMEOVER:
 			HideAll ();
