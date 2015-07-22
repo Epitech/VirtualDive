@@ -1,0 +1,126 @@
+fileFormatVersion: 2
+guid: 628f45123bb8d504f89973acf73107af
+timeCreated: 1437573459
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: pCylinder38_Preset4
+    100004: Preset4_pasted__pCube14
+    100006: Preset4_pasted__pCube15
+    100008: Preset4_pasted__pCube16
+    100010: Preset4_pasted__pCube17
+    100012: Preset4_pCylinder37
+    100014: Preset4_pCylinder39
+    100016: Preset4_pCylinder41
+    100018: Preset4_pCylinder42
+    100020: Preset4_pPipe10
+    100022: Preset4_pPipe11
+    400000: //RootNode
+    400002: pCylinder38_Preset4
+    400004: Preset4_pasted__pCube14
+    400006: Preset4_pasted__pCube15
+    400008: Preset4_pasted__pCube16
+    400010: Preset4_pasted__pCube17
+    400012: Preset4_pCylinder37
+    400014: Preset4_pCylinder39
+    400016: Preset4_pCylinder41
+    400018: Preset4_pCylinder42
+    400020: Preset4_pPipe10
+    400022: Preset4_pPipe11
+    2300000: pCylinder38_Preset4
+    2300002: Preset4_pasted__pCube14
+    2300004: Preset4_pasted__pCube15
+    2300006: Preset4_pasted__pCube16
+    2300008: Preset4_pasted__pCube17
+    2300010: Preset4_pCylinder37
+    2300012: Preset4_pCylinder39
+    2300014: Preset4_pCylinder41
+    2300016: Preset4_pCylinder42
+    2300018: Preset4_pPipe10
+    2300020: Preset4_pPipe11
+    3300000: pCylinder38_Preset4
+    3300002: Preset4_pasted__pCube14
+    3300004: Preset4_pasted__pCube15
+    3300006: Preset4_pasted__pCube16
+    3300008: Preset4_pasted__pCube17
+    3300010: Preset4_pCylinder37
+    3300012: Preset4_pCylinder39
+    3300014: Preset4_pCylinder41
+    3300016: Preset4_pCylinder42
+    3300018: Preset4_pPipe10
+    3300020: Preset4_pPipe11
+    4300000: pCylinder38_Preset4
+    4300002: Preset4_pasted__pCube14
+    4300004: Preset4_pasted__pCube15
+    4300006: Preset4_pasted__pCube16
+    4300008: Preset4_pasted__pCube17
+    4300010: Preset4_pCylinder37
+    4300012: Preset4_pCylinder39
+    4300014: Preset4_pCylinder41
+    4300016: Preset4_pCylinder42
+    4300018: Preset4_pPipe10
+    4300020: Preset4_pPipe11
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

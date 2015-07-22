@@ -1,0 +1,151 @@
+fileFormatVersion: 2
+guid: 460e5a8d4e2d6c44a9626fd24682da73
+timeCreated: 1437573458
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: pCylinder28_Preset3
+    100004: Preset3_pCube12
+    100006: Preset3_pCube13
+    100008: Preset3_pCube6
+    100010: Preset3_pCube7
+    100012: Preset3_pCylinder29
+    100014: Preset3_pCylinder30
+    100016: Preset3_pCylinder31
+    100018: Preset3_pCylinder32
+    100020: Preset3_pCylinder34
+    100022: Preset3_pCylinder35
+    100024: Preset3_pCylinder36
+    100026: Preset3_pCylinder45
+    100028: Preset3_pPipe1
+    100030: Preset3_pPipe8
+    100032: Preset3_pPipe9
+    400000: //RootNode
+    400002: pCylinder28_Preset3
+    400004: Preset3_pCube12
+    400006: Preset3_pCube13
+    400008: Preset3_pCube6
+    400010: Preset3_pCube7
+    400012: Preset3_pCylinder29
+    400014: Preset3_pCylinder30
+    400016: Preset3_pCylinder31
+    400018: Preset3_pCylinder32
+    400020: Preset3_pCylinder34
+    400022: Preset3_pCylinder35
+    400024: Preset3_pCylinder36
+    400026: Preset3_pCylinder45
+    400028: Preset3_pPipe1
+    400030: Preset3_pPipe8
+    400032: Preset3_pPipe9
+    2300000: pCylinder28_Preset3
+    2300002: Preset3_pCube12
+    2300004: Preset3_pCube13
+    2300006: Preset3_pCube6
+    2300008: Preset3_pCube7
+    2300010: Preset3_pCylinder29
+    2300012: Preset3_pCylinder30
+    2300014: Preset3_pCylinder31
+    2300016: Preset3_pCylinder32
+    2300018: Preset3_pCylinder34
+    2300020: Preset3_pCylinder35
+    2300022: Preset3_pCylinder36
+    2300024: Preset3_pCylinder45
+    2300026: Preset3_pPipe1
+    2300028: Preset3_pPipe8
+    2300030: Preset3_pPipe9
+    3300000: pCylinder28_Preset3
+    3300002: Preset3_pCube12
+    3300004: Preset3_pCube13
+    3300006: Preset3_pCube6
+    3300008: Preset3_pCube7
+    3300010: Preset3_pCylinder29
+    3300012: Preset3_pCylinder30
+    3300014: Preset3_pCylinder31
+    3300016: Preset3_pCylinder32
+    3300018: Preset3_pCylinder34
+    3300020: Preset3_pCylinder35
+    3300022: Preset3_pCylinder36
+    3300024: Preset3_pCylinder45
+    3300026: Preset3_pPipe1
+    3300028: Preset3_pPipe8
+    3300030: Preset3_pPipe9
+    4300000: pCylinder28_Preset3
+    4300002: Preset3_pCube12
+    4300004: Preset3_pCube13
+    4300006: Preset3_pCube6
+    4300008: Preset3_pCube7
+    4300010: Preset3_pCylinder29
+    4300012: Preset3_pCylinder30
+    4300014: Preset3_pCylinder31
+    4300016: Preset3_pCylinder32
+    4300018: Preset3_pCylinder34
+    4300020: Preset3_pCylinder35
+    4300022: Preset3_pCylinder36
+    4300024: Preset3_pCylinder45
+    4300026: Preset3_pPipe1
+    4300028: Preset3_pPipe8
+    4300030: Preset3_pPipe9
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
