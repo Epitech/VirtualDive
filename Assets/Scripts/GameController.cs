@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour {
 	public static GameState gameState = GameState.NONE;
 	public static GameState nextGameState = GameState.MAIN_MENU;
 	public static bool isPaused = true;
-	public static bool enableRift = false;
+	public static bool enableRift = true;
 
 	// Use this for initialization
 	void Start () {
