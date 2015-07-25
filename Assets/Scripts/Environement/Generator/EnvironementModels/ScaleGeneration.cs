@@ -26,7 +26,7 @@ public class ScaleGeneration : IGenerationScript {
 	
 	public bool IsFinished()
 	{
-		return (generator.scaleX == targetX && generator.scaleY == targetY);
+		return (generator.scale.x == targetX && generator.scale.y == targetY);
 	}
 	
 	public void OnScriptSelected()
@@ -37,8 +37,8 @@ public class ScaleGeneration : IGenerationScript {
 		targetY = Random.Range (minScale, maxScale);
 		ticksCountX = Random.Range (minIncrTicks, maxIncrTicks);
 		ticksCountY = Random.Range (minIncrTicks, maxIncrTicks);
-		incrValueX = (targetX - generator.scaleX) / ticksCountX;
-		incrValueY = (targetY - generator.scaleY) / ticksCountY;
+		incrValueX = (targetX - generator.scale.x) / ticksCountX;
+		incrValueY = (targetY - generator.scale.y) / ticksCountY;
 	}
 	
 	public void PostGenerationAction(GameObject obj)
@@ -46,14 +46,14 @@ public class ScaleGeneration : IGenerationScript {
 		ticksCountX--;
 		ticksCountY--;
 		if (ticksCountX > 0) {
-			generator.scaleX += incrValueX;
+			generator.scale += new Vector3(incrValueX, 0, 0);
 		} else {
-			generator.scaleX = targetX;
+			generator.scale = new Vector3(targetX, generator.scale.y, generator.scale.z);;
 		}
 		if (ticksCountY > 0) {
-			generator.scaleY += incrValueY;
+			generator.scale += new Vector3(0, 0, incrValueY);
 		} else {
-			generator.scaleY = targetY;
+			generator.scale = new Vector3(generator.scale.y, targetY, generator.scale.z);;
 		}
 	}
 }
