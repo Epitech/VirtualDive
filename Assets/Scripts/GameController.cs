@@ -91,6 +91,7 @@ public class GameController : MonoBehaviour {
 		score = 0;
 		scoreTarget *= 2;
 		ui.hud.OnLevelUp (currentLevel);
+		ui.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
 	}
 
 	// Update is called once per frame
@@ -118,6 +119,7 @@ public class GameController : MonoBehaviour {
 				ResetGame ();
 				ui.ShowGameStatePanel (nextGameState);
 				ui.FadeOut ();
+				ui.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
 				break;
 			case GameState.MAIN_MENU:
 				ResetGame();

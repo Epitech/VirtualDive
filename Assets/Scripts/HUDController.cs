@@ -16,6 +16,8 @@ public class HUDController : MonoBehaviour {
 	public GameObject gameOverLevelBar;
 	public GameObject gameOverRecord;
 
+	public HUDCaption hudCaption;
+
 	public void OnLevelUp(int newLevel)
 	{		
 		levelValue.GetComponent<Text>().text = "LEVEL " + newLevel;
@@ -28,6 +30,9 @@ public class HUDController : MonoBehaviour {
 	}
 
 	void Update() {
+	}
+
+	public void OnShow() {
 	}
 
 	public void UpdateGameOverHUD(GameController gc) {

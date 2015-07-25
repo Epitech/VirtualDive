@@ -42,7 +42,6 @@ public class World {
 			return (true);
 		}
 		float offset = generator.GetLowestBlock().transform.position.y + BlockUtils.GetLowerBoundValue (generator.GetLowestBlock());
-		Debug.Log ("Offset=" + offset);
 
 		if (offset > generator.GetSpawnLocationY())
 			return (true);
