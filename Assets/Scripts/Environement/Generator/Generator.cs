@@ -82,56 +82,12 @@ public class Generator : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		ApplyMovement ();
-		Generate ();
-		ClearEntities ();
-		/*
-		//Transform[] ts = spawnParent.GetComponentsInChildren<Transform>();
-		GameObject lastGo = null;
-		bool notDeleted = false;
-
 		if (GameController.isPaused)
 			return;
 
-		while (!notDeleted) {
-			notDeleted = true;
-			lastGo = null;
-			foreach (GameObject obj in generatedObjects) {
-				//GameObject obj = objTrs.gameObject;
-				Transform objTrs = obj.transform;
-
-				obj.transform.position = new Vector3 (objTrs.position.x, objTrs.position.y + controller.moveSpeedY, objTrs.position.z);
-				if (objTrs.position.y > destroyLocation.transform.position.y) {
-					generatedObjects.Remove (obj);
-					Destroy (obj);
-					notDeleted = false;
-					break;
-				}
-				if (obj.tag == "Environement") {
-					if (lastGo == null)
-						lastGo = obj;
-					if (lastGo != null && lastGo.transform.position.y > obj.transform.position.y)
-						lastGo = obj;
-				}
-			}
-		}
-		if (lastGo == null || IsEntityOutOfSpawnRange(lastGo)) {
-			GameObject obj = GenerateWall();
-			float yDiff = spawnLocation.transform.position.y;
-
-			if (lastGo) {
-				yDiff = lastGo.transform.position.y +
-					GetObjectLowerBound(lastGo) -
-					GetObjectUpperBound(obj);
-			}
-			obj.transform.position = new Vector3(spawnLocation.transform.position.x, yDiff, spawnLocation.transform.position.z);
-		}
-		colliderGenerationTime -= Time.deltaTime;
-		if (colliderGenerationTime < 0) {
-			colliderGenerationTime = controller.collisionGenerationTime;
-			GenerateCollider();
-		}
-		UpdateGenerationScript ();*/
+		ApplyMovement ();
+		Generate ();
+		ClearEntities ();
 	}
 
 	void UpdateGenerationScript()
