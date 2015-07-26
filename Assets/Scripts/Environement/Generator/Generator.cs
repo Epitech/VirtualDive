@@ -152,7 +152,7 @@ public class Generator : MonoBehaviour {
 
 		foreach (Transform child in spawnParent.transform) {
 			obj = child.gameObject;
-			obj.transform.position += new Vector3 (0, controller.moveSpeedY, 0);
+			obj.transform.position += new Vector3 (0, controller.ApplyTimeScale(controller.moveSpeedY), 0);
 		} 
 	}
 

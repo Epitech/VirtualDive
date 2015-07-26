@@ -101,9 +101,9 @@ public class GameController : MonoBehaviour {
 		}
 		if (!isPaused) {
 			if (gameState == GameState.PLAYING) {
-				moveSpeedY += moveSpeedIncr;
+				moveSpeedY += ApplyTimeScale(moveSpeedIncr);
 				timeSpent += Time.deltaTime;
-				score += moveSpeedY / 1000.0f + timeSpent / 100.0f;
+				score += ApplyTimeScale(moveSpeedY / 1000.0f + timeSpent / 100.0f);
 				if (score >= scoreTarget) {
 					LevelUp ();
 				}
@@ -215,5 +215,9 @@ public class GameController : MonoBehaviour {
 		ui.FadeIn ();
 		nextGameState = GameState.MAIN_MENU;
 		Debug.Log ("Gamestate swap started to " + nextGameState);
+	}
+
+	public float ApplyTimeScale(float value) {
+		return (Time.deltaTime / (1.0f / 60.0f) * value);
 	}
 }

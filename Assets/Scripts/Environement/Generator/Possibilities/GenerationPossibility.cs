@@ -33,7 +33,7 @@ public class GenerationPossibility<T> {
 	}
 	
 	public bool CanGenerate(int randChance, int activeLevel) {
-		return (iterationsBeforeNextGenerationActive == 0 && randChance > chance &&
+		return (iterationsBeforeNextGenerationActive == 0 && randChance < chance &&
 		        activeLevel >= minLevel && activeLevel <= maxLevel);
 	}
 }
