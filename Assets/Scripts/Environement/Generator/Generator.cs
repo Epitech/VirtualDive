@@ -59,25 +59,7 @@ public class Generator : MonoBehaviour {
 	}
 
 	public void InitialSpawn() {
-		/*
-		float lastHeight = 0;
-		GameObject prevObj = null;
-
-		activeGenerationScript = generationScripts [0] as IGenerationScript;
-
-		for (float i = spawnLocation.transform.position.y; i < destroyLocation.transform.position.y; i += lastHeight) {
-			GameObject obj = GenerateWall();
-		
-			if (prevObj) {
-				obj.transform.position = (new Vector3 (0, i - GetObjectLowerBound(obj), 0));
-				lastHeight = GetObjectUpperBound(obj) - GetObjectLowerBound(obj);
-			} else {
-				obj.transform.position = (new Vector3 (0, i, 0));
-				lastHeight = GetObjectUpperBound(obj);
-			}
-			prevObj = obj;
-
-		}*/
+		//TODO
 	}
 
 	// Update is called once per frame
@@ -88,49 +70,7 @@ public class Generator : MonoBehaviour {
 		ApplyMovement ();
 		Generate ();
 		ClearEntities ();
-	}
-
-	void UpdateGenerationScript()
-	{
-		/*
-		if (activeGenerationScript != null) {
-			if (!activeGenerationScript.IsFinished()) {
-				return ;
-			}
-		}
-		activeGenerationScript = null;
-		while (activeGenerationScript == null) {
-			Tuple<int, IGenerationScript> tpl = generationScripts [Random.Range (0, generationScripts.Count)] as Tuple<int, IGenerationScript>;
-
-			if (Random.Range(0, 100) < tpl.First) {
-				activeGenerationScript = tpl.Second;
-			}
-		}
-		activeGenerationScript.OnScriptSelected ();*/
-	}
-
-	public GameObject GenerateCollider() {
-		return (null);
-		/*
-		GameObject prefab = null;
-		while (prefab == null) {
-			GameObjectChance goc = collidersPrefabs[Random.Range(0, collidersPrefabs.Length)];
-			
-			if (Random.Range(0, 100) < goc.chance) {
-				prefab = goc.obj;
-			}
-		}
-
-		GameObject obj = Instantiate<GameObject> (prefab);
-		Rigidbody rbd = obj.GetComponent<Rigidbody> ();
-		generatedObjects.Add (obj);
-		obj.transform.position = spawnLocation.transform.position;
-		obj.transform.SetParent (spawnParent.transform);
-		if (rbd) {
-			rbd.AddForce(Random.Range(-10.0f, 10.0f), 0, Random.Range(-10.0f, 10.0f)); 
-			rbd.angularVelocity.Set (Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
-		}
-		return (obj);*/
+		activeWorld.GenerateObstacle ();
 	}
 
 	#region METHODS

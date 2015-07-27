@@ -23,6 +23,10 @@ public class World {
 	
 	// Generated objects count
 	public int generatedCount;
+
+	// Next Obstacle Generation ticks
+	public int nextObstacleGenerateTicks;
+
 	#endregion
 	#region PRIVATE_PROPS
 	// Local generator
@@ -52,7 +56,7 @@ public class World {
 	public GameObject GenerateBlock() {
 		GameObject prefab = null;
 		int maxIt = 50;
-		
+
 		while (maxIt != 0 && prefab == null) {
 			ObjectGenerationPossibility goc = blockPrefabs[Random.Range(0, blockPrefabs.Length)];
 			--maxIt;
@@ -78,6 +82,7 @@ public class World {
 
 	// Generate an obstacle
 	public GameObject GenerateObstacle() {
+
 		return (null);
 	}
 
