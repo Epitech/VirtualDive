@@ -120,7 +120,7 @@ public class UIController : MonoBehaviour {
 		state = FadeState.NONE;
         if (UnityEngine.VR.VRDevice.isPresent && isOculusUI && !uiLocked)
         {
-            Ray ray = uiCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+            Ray ray = uiCam.ViewportPointToRay(new Vector3(0.5f, 0.475f, 0.0f));
             RaycastHit[] hits = Physics.RaycastAll(ray);
             bool focused = false;
 
