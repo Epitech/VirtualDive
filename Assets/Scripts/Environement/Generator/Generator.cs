@@ -59,6 +59,29 @@ public class Generator : MonoBehaviour {
 	}
 
 	public void InitialSpawn() {
+        Vector3 origPos = destroyLocation.transform.position;
+        Vector3 activePos = origPos;
+        GameObject obj;
+
+        lowestBlock = null;
+        while (activePos.y > spawnLocation.transform.position.y)
+        {
+            float yDiff = 0.0f;
+
+            obj = activeWorld.GenerateBlock();
+            ApplyGenerationParameters(obj);
+            UpdateWorldsGenerationChance();
+            if (lowestBlock)
+                yDiff = BlockUtils.GetUpperBoundValue(obj);
+            obj.transform.position = new Vector3(activePos.x, activePos.y - yDiff, activePos.z);
+            
+            if (!lowestBlock)
+                activePos += new Vector3(0, BlockUtils.GetLowerBoundValue(obj), 0);
+            else
+                activePos -= new Vector3(0, BlockUtils.GetHeight(obj), 0);
+
+            lowestBlock = obj;
+        }
 		//TODO
 	}
 

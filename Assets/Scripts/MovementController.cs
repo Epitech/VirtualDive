@@ -24,7 +24,7 @@ public class MovementController : MonoBehaviour {
 			return;
 		if (GameController.isPaused == true)
 			return;
-        charctrl.Move(new Vector3(vec.x * 50.0f, 0, vec.z * 50.0f));
+        charctrl.Move(new Vector3(vec.x, 0, vec.z));
 		//body.AddForce(new Vector3(vec.x * 50.0f, 0, vec.z * 50.0f));
 	}
 	
