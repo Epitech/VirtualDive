@@ -8,14 +8,17 @@ public class Generator : MonoBehaviour {
 	// Main GC
 	public GameController controller;
 
+    // Player GC
+    public GameObject player;
+
 	// Generation containers
 	public WorldGenerationPossibility[] worlds;
 
 	// Generic colliders that can be generated (unimplemented)
-	//public ObjectGenerationPossibility[] collidersPrefabs;
+	public ObjectGenerationPossibility[] collidersPrefabs;
 
 	// Generic generation scripts alterators (unimplemented)
-	public List<ObjectGenerationPossibility> generationScripts;
+    public List<GenerationModelPossibility> generationScripts;
 	
 	// Generation parameters
 	// +alterable by generation scripts
@@ -160,7 +163,8 @@ public class Generator : MonoBehaviour {
 			new Vector3(0, BlockUtils.GetLowerBoundValue(lowestBlock), 0) - 
 			new Vector3(0, BlockUtils.GetUpperBoundValue(obj), 0);
 		obj.transform.SetParent (spawnParent.transform);
-		obj.transform.Rotate (new Vector3 (0, rotation, 0));
+		//obj.transform.Rotate (new Vector3 (0, rotation, 0));
+        player.transform.Rotate(new Vector3(0, rotation, 0));
 	}
 
 	public World SetNewWorld() {

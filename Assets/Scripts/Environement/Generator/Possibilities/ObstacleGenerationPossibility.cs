@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 
 [System.Serializable]
 public class ObstacleGenerationPossibility : GenerationPossibility<Obstacle> 

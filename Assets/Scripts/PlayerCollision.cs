@@ -15,10 +15,12 @@ public class PlayerCollision : MonoBehaviour {
 	
 	}
 
-	void OnTriggerEnter(Collider col) {
-
-		if (col.tag == "Collider") {
-			Debug.Log ("Collision");
+    void OnControllerColliderHit(ControllerColliderHit hitcol)
+    {
+        Collider col = hitcol.collider;
+        Debug.Log("Collision");
+        if (col.tag == "Collider")
+        {
 			gc.OnPlayerCollision();
 		}
 	}

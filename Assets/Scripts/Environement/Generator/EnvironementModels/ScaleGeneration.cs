@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ScaleGeneration : IGenerationScript {
-
-	private Generator generator;
+public class ScaleGeneration : GenerationScript {
 
 	private float targetX;
 	private float targetY;
@@ -18,18 +16,13 @@ public class ScaleGeneration : IGenerationScript {
 
 	public int ticksCountX = 0;
 	public int ticksCountY = 0;
-
-	public ScaleGeneration(Generator gen) 
-	{
-		generator = gen;
-	}
 	
-	public bool IsFinished()
+	public new bool IsFinished()
 	{
 		return (generator.scale.x == targetX && generator.scale.y == targetY);
 	}
-	
-	public void OnScriptSelected()
+
+    public new void OnScriptSelected()
 	{
 		Debug.Log ("ScaleGeneration");
 
@@ -41,7 +34,7 @@ public class ScaleGeneration : IGenerationScript {
 		incrValueY = (targetY - generator.scale.y) / ticksCountY;
 	}
 	
-	public void PostGenerationAction(GameObject obj)
+	public new void PostGenerationAction(GameObject obj)
 	{
 		ticksCountX--;
 		ticksCountY--;
