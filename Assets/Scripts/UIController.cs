@@ -18,6 +18,10 @@ public class UIController : MonoBehaviour {
 	public GameObject panelFade;
 
 	public HUDController hud;
+    public Camera uiCam;
+    public bool isOculusUI;
+    public float activeFocusTimer = 0.0f;
+    public float focusTime = 1.5f;
 
 	// When a fading is in progress, lock ui states
 	public bool uiLocked = false;
@@ -42,8 +46,7 @@ public class UIController : MonoBehaviour {
 		case GameState.MAIN_MENU:
 			HideAll ();
 			panelMainMenu.SetActive(true);
-			//events.SetSelectedGameObject(panelMainMenu.transform.FindChild("Buttons").FindChild("PlayBtn").gameObject);
-			break;
+            break;
 		case GameState.GAMEOVER:
 			HideAll ();
 			panelGameOver.SetActive(true);
@@ -115,5 +118,34 @@ public class UIController : MonoBehaviour {
 			break;
 		}
 		state = FadeState.NONE;
+        if (UnityEngine.VR.VRDevice.isPresent && isOculusUI && !uiLocked)
+        {
+            Ray ray = uiCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+            RaycastHit[] hits = Physics.RaycastAll(ray);
+            bool focused = false;
+
+            foreach (RaycastHit hit in hits)
+            {
+                GameObject obj = hit.collider.gameObject;
+                Button bt = obj.transform.parent.gameObject.GetComponent<Button>();
+                if (bt)
+                {
+                    events.SetSelectedGameObject(bt.gameObject);
+                    focused = true;
+                }
+            }
+            activeFocusTimer -= Time.deltaTime;
+            if (focused == false)
+            {
+                activeFocusTimer = focusTime;
+                events.SetSelectedGameObject(null);
+            }
+            if (activeFocusTimer <= 0.0f)
+            {
+                events.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
+                // Simulate lock
+                activeFocusTimer = 150.0f;
+            }
+        }
 	}
 }

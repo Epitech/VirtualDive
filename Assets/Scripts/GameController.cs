@@ -55,6 +55,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		if (VR.VRDevice.isPresent && enableRift) {
 			GameObject.Find("UIs").transform.FindChild("UI_OCULUS").gameObject.SetActive(true);
+            GameObject.Find("UIs").transform.FindChild("UI").gameObject.SetActive(true);
 			ui = uiOculus;
 			cameraOculus.SetActive(true);
 			cameraDefault.SetActive(false);
@@ -119,6 +120,7 @@ public class GameController : MonoBehaviour {
 				isPaused = false;
 				Time.timeScale = 1.0f;
 				ResetGame ();
+                uiDefault.HideAll();
 				ui.ShowGameStatePanel (nextGameState);
 				ui.FadeOut ();
 				ui.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
@@ -127,13 +129,16 @@ public class GameController : MonoBehaviour {
 				ResetGame();
 				isPaused = false;
 				Time.timeScale = 1.0f;
-				ui.ShowGameStatePanel (nextGameState);
+                ui.HideAll();
+                uiDefault.HideAll();
+				uiDefault.ShowGameStatePanel (nextGameState);
 				ui.FadeOut ();
 				break;
 			case GameState.GAMEOVER:
 				isPaused = true;
 				Time.timeScale = 1.0f;
-				ui.ShowGameStatePanel (nextGameState);
+                ui.HideAll();
+                uiDefault.ShowGameStatePanel(nextGameState);
 				ui.hud.UpdateGameOverHUD(this);
 				break;
 			default:
