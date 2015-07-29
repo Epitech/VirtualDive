@@ -40,10 +40,10 @@ public class Generator : MonoBehaviour {
 	public GameObject lowestBlock;
 
 	// Generation active script
-	private IGenerationScript activeGenerationScript;
+	//private IGenerationScript activeGenerationScript;
 
 	// Fatal exception - loop breaker
-	private bool fatal = false;
+	//private bool fatal = false;
 	//private float colliderGenerationTime;
 	//private ArrayList generatedObjects;
 	#endregion
@@ -76,10 +76,10 @@ public class Generator : MonoBehaviour {
 	#region METHODS
 	// Reset all default data
 	public void Clear() {
-		bool cleared = false;
+		//bool cleared = false;
 		scale = new Vector3 (3, 3, 3);
 		rotation = 0.0f;
-		activeGenerationScript = null;
+		//activeGenerationScript = null;
 		lowestBlock = null;
 
 		foreach (Transform child in spawnParent.transform) {
@@ -98,7 +98,7 @@ public class Generator : MonoBehaviour {
 
 	private void ClearEntities() {
 		int childs = spawnParent.transform.childCount;
-		Transform obj = null;
+		//Transform obj = null;
 
 		foreach (Transform child in spawnParent.transform) {
 			if (child.position.y > destroyLocation.transform.position.y) {
@@ -123,7 +123,7 @@ public class Generator : MonoBehaviour {
 			ApplyGenerationParameters(obj);
 			UpdateWorldsGenerationChance();
 			lowestBlock = obj;
-			fatal = true;
+			//fatal = true;
 		}
 	}
 
@@ -149,7 +149,7 @@ public class Generator : MonoBehaviour {
 			WorldGenerationPossibility pos = worlds[Random.Range(0, worlds.Length)];
 
 			--maxIt;
-			if (pos.CanGenerate(rnd, controller.currentLevel)) {
+			if (pos.CanGenerate(rnd, controller.currentLevel, lowestBlock)) {
 				pos.ResetGenerateChance();
 				activeWorld = pos.blueprint;
 				found = true;
@@ -157,7 +157,6 @@ public class Generator : MonoBehaviour {
 		}
 		if (maxIt == 0) {
 			throw new UnityException("World generation failed - Cant find world matching parameters");
-			fatal = true;
 		}
 		Debug.Log ("World changed to " + activeWorld.name);
 		activeWorld.OnSet (this);

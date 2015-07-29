@@ -9,11 +9,13 @@ public class MovementController : MonoBehaviour {
 	public delegate void typeRes();
 	public typeRes toto;
 
-	private Rigidbody body;
+	//private Rigidbody body;
+    private CharacterController charctrl;
 
 	// Use this for initialization
 	void Start () {
-		body = this.GetComponent<Rigidbody> ();
+        charctrl = this.GetComponent<CharacterController>();
+		//body = this.GetComponent<Rigidbody> ();
 	}
 
 	public void ApplyMovement(Vector3 vec)
@@ -22,7 +24,8 @@ public class MovementController : MonoBehaviour {
 			return;
 		if (GameController.isPaused == true)
 			return;
-		body.AddForce(new Vector3(vec.x * 50.0f, 0, vec.z * 50.0f));
+        charctrl.Move(new Vector3(vec.x * 50.0f, 0, vec.z * 50.0f));
+		//body.AddForce(new Vector3(vec.x * 50.0f, 0, vec.z * 50.0f));
 	}
 	
 	// Update is called once per frame
@@ -33,19 +36,23 @@ public class MovementController : MonoBehaviour {
 			return;
 		if (Input.GetAxis("Horizontal") > 0)
 		{
-			body.AddForce(new Vector3(xVelocity, 0, 0));
+            charctrl.Move(new Vector3(xVelocity, 0, 0));
+			//body.Set(new Vector3(xVelocity, 0, 0));
 		}
 		if (Input.GetAxis("Horizontal") < 0)
 		{
-			body.AddForce(new Vector3(-xVelocity, 0, 0));
+            charctrl.Move(new Vector3(-xVelocity, 0, 0));
+            //body.AddRelativeForce(new Vector3(-xVelocity, 0, 0));
 		}
 		if (Input.GetAxis("Vertical") > 0)
 		{
-			body.AddForce(new Vector3(0, 0, yVelocity));
+            charctrl.Move(new Vector3(0, 0, yVelocity));
+            //body.AddRelativeForce(new Vector3(0, 0, yVelocity));
 		}
 		if (Input.GetAxis("Vertical") < 0)
 		{
-			body.AddForce(new Vector3(0, 0, -yVelocity));
+            charctrl.Move(new Vector3(0, 0, -yVelocity));
+            //body.AddRelativeForce(new Vector3(0, 0, -yVelocity));
 		}
 	}
 }

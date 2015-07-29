@@ -59,13 +59,15 @@ public class GameController : MonoBehaviour {
 			cameraOculus.SetActive(true);
 			cameraDefault.SetActive(false);
 			ovrCharacter.enabled = true;
+           // GameObject.Find("OVRPlayerController").transform.GetComponentInChildren<Rigidbody>().drag = 10.0f;
 		} else {
 			GameObject.Find("UIs").transform.FindChild("UI").gameObject.SetActive(true);
 			ui = uiDefault;
 			cameraOculus.SetActive(false);
 			cameraDefault.SetActive(true);
 			ovrCharacter.enabled = false;
-		}
+            //GameObject.Find("OVRPlayerController").transform.GetComponentInChildren<Rigidbody>().drag = 1.0f;
+        }
 		if (collisionGenerationTime == 0)
 			collisionGenerationTime = 1.0f;
 		defCurrentLevel = currentLevel;
@@ -151,7 +153,7 @@ public class GameController : MonoBehaviour {
 		scoreTarget = 100.0f;
 		moveSpeedY = defMoveSpeedY;
 		player.transform.position = playerSpawn.transform.position;
-		player.GetComponent<Rigidbody> ().Sleep ();
+		//player.GetComponent<Rigidbody> ().Sleep ();
 		generator.Clear ();
 		generator.InitialSpawn ();
 	}

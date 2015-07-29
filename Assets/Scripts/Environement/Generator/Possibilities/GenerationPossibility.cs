@@ -21,7 +21,7 @@ public class GenerationPossibility<T> {
 
 	// Internals
 	// Active count from 0 to inf before generating
-	private int iterationsBeforeNextGenerationActive = 0;
+	protected int iterationsBeforeNextGenerationActive = 0;
 	
 	public void ResetGenerateChance() {
 		iterationsBeforeNextGenerationActive = iterationsBeforeNextGeneration;
@@ -32,7 +32,7 @@ public class GenerationPossibility<T> {
 			--iterationsBeforeNextGenerationActive;
 	}
 	
-	public bool CanGenerate(int randChance, int activeLevel) {
+	public bool CanGenerate(int randChance, int activeLevel, GameObject blockReference) {
 		return (iterationsBeforeNextGenerationActive == 0 && randChance < chance &&
 		        activeLevel >= minLevel && activeLevel <= maxLevel);
 	}

@@ -19,7 +19,7 @@ public class World {
 	public ObjectGenerationPossibility[] blockPrefabs;
 
 	// Obstacles that can be generated for this world
-	public ObjectGenerationPossibility[] obstaclePrefabs;
+	public ObstacleGenerationPossibility[] obstaclePrefabs;
 	
 	// Generated objects count
 	public int generatedCount;
@@ -60,7 +60,7 @@ public class World {
 		while (maxIt != 0 && prefab == null) {
 			ObjectGenerationPossibility goc = blockPrefabs[Random.Range(0, blockPrefabs.Length)];
 			--maxIt;
-			if (goc.CanGenerate(Random.Range (0, 100), generator.controller.currentLevel)) {
+			if (goc.CanGenerate(Random.Range (0, 100), generator.controller.currentLevel, generator.lowestBlock)) {
 				goc.ResetGenerateChance();
 				prefab = goc.blueprint;
 			}

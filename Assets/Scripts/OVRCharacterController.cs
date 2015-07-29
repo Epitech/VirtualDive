@@ -7,8 +7,6 @@ public class OVRCharacterController : MonoBehaviour {
 	public Vector3 startPos;
 	public Vector3 target;
 
-	private int trackCount = 0;
-
 	public MovementController mvtCtrl;
 
 	// Use this for initialization
@@ -38,7 +36,7 @@ public class OVRCharacterController : MonoBehaviour {
 
 		if (Input.GetKeyUp (KeyCode.R)) {
 			OVRManager.display.RecenterPose();
-			trackCount = 0;
+			//trackCount = 0;
 			poseTracker = VR.InputTracking.GetLocalPosition (VR.VRNode.Head);
 			pose = TrackerPosToUnity(poseTracker.x, poseTracker.y, poseTracker.z);
 			transform.position = new Vector3 (0, 0, 0);
