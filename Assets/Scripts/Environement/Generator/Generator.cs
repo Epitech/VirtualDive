@@ -37,6 +37,10 @@ public class Generator : MonoBehaviour {
 
 	// Entities global parent
 	public GameObject spawnParent;
+
+    // Total entities generated
+    public int generatedCount = 0;
+
 	#endregion
 	#region PRIVATE_PROPS
 	// Lowest block generated
@@ -96,8 +100,8 @@ public class Generator : MonoBehaviour {
 		ApplyMovement ();
 		Generate ();
 		ClearEntities ();
-		activeWorld.GenerateObstacle ();
-	}
+        player.transform.Rotate(new Vector3(0, rotation, 0));
+    }
 
 	#region METHODS
 	// Reset all default data
@@ -117,8 +121,18 @@ public class Generator : MonoBehaviour {
 		GameObject obj = null;
 
 		foreach (Transform child in spawnParent.transform) {
-			obj = child.gameObject;
-			obj.transform.position += new Vector3 (0, controller.ApplyTimeScale(controller.moveSpeedY), 0);
+            obj = child.gameObject; if (child.tag == "Environement" || child.tag == "Collider")
+            {
+                obj.transform.position += new Vector3(0, controller.ApplyTimeScale(controller.moveSpeedY), 0);
+            }
+            else if (child.tag == "EnvironementFalling")
+            {
+                obj.GetComponent<Rigidbody>().AddForce(new Vector3(0, -controller.ApplyTimeScale(controller.moveSpeedY), 0));
+            }
+            else if (child.tag == "Collider")
+            {
+                obj.GetComponent<Rigidbody>().AddForce(new Vector3(0, controller.ApplyTimeScale(controller.moveSpeedY), 0));
+            }
 		} 
 	}
 
@@ -127,7 +141,9 @@ public class Generator : MonoBehaviour {
 		//Transform obj = null;
 
 		foreach (Transform child in spawnParent.transform) {
-			if (child.position.y > destroyLocation.transform.position.y) {
+			if ((child.position.y > destroyLocation.transform.position.y && (child.tag == "Environement" || child.tag == "Collider")) ||
+                (child.position.y < spawnLocation.transform.position.y && child.tag == "EnvironementFalling")) 
+            {
 				Destroy (child.gameObject);
 			}
 		} 
@@ -149,9 +165,16 @@ public class Generator : MonoBehaviour {
 			ApplyGenerationParameters(obj);
 			UpdateWorldsGenerationChance();
 			lowestBlock = obj;
+            generatedCount++;
 			//fatal = true;
 		}
-	}
+        if (activeWorld.CanGenerateObstacle())
+        {
+            GameObject obj = activeWorld.GenerateObstacle();
+            ApplyGenerationParameters(obj);
+            //fatal = true;
+        }
+    }
 
 	// Apply generation specific settings to the last generated block
 	public void ApplyGenerationParameters(GameObject obj) {
@@ -164,7 +187,6 @@ public class Generator : MonoBehaviour {
 			new Vector3(0, BlockUtils.GetUpperBoundValue(obj), 0);
 		obj.transform.SetParent (spawnParent.transform);
 		//obj.transform.Rotate (new Vector3 (0, rotation, 0));
-        player.transform.Rotate(new Vector3(0, rotation, 0));
 	}
 
 	public World SetNewWorld() {

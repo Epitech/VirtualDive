@@ -28,7 +28,7 @@ public class OVRCharacterController : MonoBehaviour {
 		Vector3 distance = pose - transform.position;
 		target = pose;
 
-		Debug.Log ("Target is at " + target + ", dist is " + distance);
+		//Debug.Log ("Target is at " + target + ", dist is " + distance);
 		//transform.position = new Vector3 (pose.x * 150, 0, pose.y * 260);
 
 		mvtCtrl.ApplyMovement (distance);

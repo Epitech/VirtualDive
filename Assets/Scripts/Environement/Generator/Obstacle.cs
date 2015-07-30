@@ -12,6 +12,7 @@ public struct AngleTable
 public class Obstacle
 {
     public GameObject prefab;
+    public bool isDynamic;
 
     public AngleTable[] spawnAngles;
 
@@ -29,7 +30,6 @@ public class Obstacle
 
     public GameObject Generate()
     {
-
         return (null);
     }
 }

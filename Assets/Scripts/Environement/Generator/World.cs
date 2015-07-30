@@ -80,6 +80,11 @@ public class World {
 		}
 	}
 
+    public bool CanGenerateObstacle()
+    {
+        return (false);
+    }
+
 	// Generate an obstacle
 	public GameObject GenerateObstacle() {
 

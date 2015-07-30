@@ -27,7 +27,7 @@ public class UIController : MonoBehaviour {
 	public bool uiLocked = false;
 	public FadeState state = FadeState.NONE;
 
-	private EventSystem events;
+    public EventSystem events;
 
 	public void SetPauseVisible(bool state) {
 		panelPause.SetActive (state);
@@ -102,7 +102,7 @@ public class UIController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		events = transform.FindChild ("EventSystem").GetComponent<EventSystem>();
+		//events = transform.FindChild ("EventSystem").GetComponent<EventSystem>();
 	}
 	
 	// Update is called once per frame
