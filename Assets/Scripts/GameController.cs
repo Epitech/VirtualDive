@@ -51,17 +51,25 @@ public class GameController : MonoBehaviour {
 	public static GameState gameState = GameState.NONE;
 	public static GameState nextGameState = GameState.MAIN_MENU;
 	public static bool isPaused = true;
-	public static bool enableRift = true;
+
+	public bool enableRift = true;
 
 	// Use this for initialization
 	void Start () {
-		if (VR.VRDevice.isPresent && enableRift) {
+
+        // Conditionnal - Android setup
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            cameraDefault.GetComponent<UnityStandardAssets.ImageEffects.Tonemapping>().enabled = false;
+        }
+
+        if (VR.VRDevice.isPresent && enableRift) {
 			GameObject.Find("UIs").transform.FindChild("UI_OCULUS").gameObject.SetActive(true);
 			cameraOculus.SetActive(true);
 			cameraDefault.SetActive(false);
 			ovrCharacter.enabled = true;
             ui.panelFade = ui.oculusPanelFade;
-           // GameObject.Find("OVRPlayerController").transform.GetComponentInChildren<Rigidbody>().drag = 10.0f;
+            //GameObject.Find("OVRPlayerController").transform.GetComponentInChildren<Rigidbody>().drag = 10.0f;
 		} else {
             GameObject.Find("UIs").transform.FindChild("UI_OCULUS").gameObject.SetActive(false);
 			cameraOculus.SetActive(false);
