@@ -14,8 +14,6 @@ public enum GameState {
 public class GameController : MonoBehaviour {
 	
 	public Generator generator;
-	public UIController uiDefault;
-	public UIController uiOculus;
 
 	public GameObject cameraDefault;
 	public GameObject cameraOculus;
@@ -28,6 +26,7 @@ public class GameController : MonoBehaviour {
 
 	// Activer UI controller
 	public UIController ui;
+    public UIControllerOculus uiOculus;
 
 	// Parameters of the game
 	public float collisionGenerationTime = 1.0f;
@@ -58,15 +57,13 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		if (VR.VRDevice.isPresent && enableRift) {
 			GameObject.Find("UIs").transform.FindChild("UI_OCULUS").gameObject.SetActive(true);
-            GameObject.Find("UIs").transform.FindChild("UI").gameObject.SetActive(true);
-			ui = uiOculus;
 			cameraOculus.SetActive(true);
 			cameraDefault.SetActive(false);
 			ovrCharacter.enabled = true;
+            ui.panelFade = ui.oculusPanelFade;
            // GameObject.Find("OVRPlayerController").transform.GetComponentInChildren<Rigidbody>().drag = 10.0f;
 		} else {
-			GameObject.Find("UIs").transform.FindChild("UI").gameObject.SetActive(true);
-			ui = uiDefault;
+            GameObject.Find("UIs").transform.FindChild("UI_OCULUS").gameObject.SetActive(false);
 			cameraOculus.SetActive(false);
 			cameraDefault.SetActive(true);
 			ovrCharacter.enabled = false;
@@ -96,8 +93,8 @@ public class GameController : MonoBehaviour {
 		finalScore += score;
 		score = 0;
 		scoreTarget *= 2;
-        uiDefault.hud.OnLevelUp(currentLevel);
-        uiDefault.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
+        ui.hud.OnLevelUp(currentLevel);
+        ui.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
 	}
 
 	// Update is called once per frame
@@ -130,8 +127,8 @@ public class GameController : MonoBehaviour {
 				isPaused = false;
 				Time.timeScale = 1.0f;
 				ResetGame ();
-                uiDefault.HideAll();
-                uiDefault.ShowGameStatePanel(nextGameState);
+                ui.HideAll();
+                ui.ShowGameStatePanel(nextGameState);
 				ui.FadeOut ();
 				//ui.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
 				break;
@@ -140,15 +137,14 @@ public class GameController : MonoBehaviour {
 				isPaused = false;
 				Time.timeScale = 1.0f;
                 ui.HideAll();
-                uiDefault.HideAll();
-				uiDefault.ShowGameStatePanel (nextGameState);
+				ui.ShowGameStatePanel (nextGameState);
 				ui.FadeOut ();
 				break;
 			case GameState.GAMEOVER:
 				isPaused = true;
 				Time.timeScale = 1.0f;
                 ui.HideAll();
-                uiDefault.ShowGameStatePanel(nextGameState);
+                ui.ShowGameStatePanel(nextGameState);
 				ui.hud.UpdateGameOverHUD(this);
 				break;
 			default:
@@ -157,7 +153,7 @@ public class GameController : MonoBehaviour {
 			gameState = nextGameState;
 			nextGameState = GameState.NONE;
 		}
-        uiDefault.hud.UpdateHUD(this);
+        ui.hud.UpdateHUD(this);
 	}
 
 	public void ResetGame() {
