@@ -118,33 +118,44 @@ public class UIController : MonoBehaviour {
 			break;
 		}
 		state = FadeState.NONE;
-        if (UnityEngine.VR.VRDevice.isPresent && isOculusUI && !uiLocked)
+        if (UnityEngine.VR.VRDevice.isPresent)
         {
-            Ray ray = uiCam.ViewportPointToRay(new Vector3(0.5f, 0.475f, 0.0f));
-            RaycastHit[] hits = Physics.RaycastAll(ray);
-            bool focused = false;
+            if (!isOculusUI)
+            {
+                // Rotate dynamically fixed UI
+                panelHUD.transform.localRotation = new Quaternion(UnityEngine.VR.InputTracking.GetLocalRotation(0).x * -0.8f, 
+                    UnityEngine.VR.InputTracking.GetLocalRotation(0).y * -1.2f, 0.0f, 1.0f);
+            }
 
-            foreach (RaycastHit hit in hits)
-            {
-                GameObject obj = hit.collider.gameObject;
-                Button bt = obj.transform.parent.gameObject.GetComponent<Button>();
-                if (bt)
+            if (isOculusUI && !uiLocked)
+            { 
+                // Raytrace pointer location
+                Ray ray = uiCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+                RaycastHit[] hits = Physics.RaycastAll(ray);
+                bool focused = false;
+
+                foreach (RaycastHit hit in hits)
                 {
-                    events.SetSelectedGameObject(bt.gameObject);
-                    focused = true;
+                    GameObject obj = hit.collider.gameObject;
+                    Button bt = obj.transform.parent.gameObject.GetComponent<Button>();
+                    if (bt)
+                    {
+                        events.SetSelectedGameObject(bt.gameObject);
+                        focused = true;
+                    }
                 }
-            }
-            activeFocusTimer -= Time.deltaTime;
-            if (focused == false)
-            {
-                activeFocusTimer = focusTime;
-                events.SetSelectedGameObject(null);
-            }
-            if (activeFocusTimer <= 0.0f)
-            {
-                events.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
-                // Simulate lock
-                activeFocusTimer = 150.0f;
+                activeFocusTimer -= Time.deltaTime;
+                if (focused == false)
+                {
+                    activeFocusTimer = focusTime;
+                    events.SetSelectedGameObject(null);
+                }
+                if (activeFocusTimer <= 0.0f)
+                {
+                    events.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
+                    // Simulate lock
+                    activeFocusTimer = 150.0f;
+                }
             }
         }
 	}

@@ -34,12 +34,15 @@ public class GameController : MonoBehaviour {
 	public float moveSpeedY = 1.0f;
 	public float offsetY;
 	public float moveSpeedIncr = 0.0035f;
+    public float invulnerability = 0.0f;
 
 	public int currentLevel = 1;
 	public float timeSpent = 0.0f;
 	public float finalScore = 0.0f;
 	public float score = 0.0f;
 	public float scoreTarget = 100.0f;
+    public float damage = 0.0f;
+    public float maxDamage = 100.0f;
 
 	private int defCurrentLevel;
 	private float defMoveSpeedY;
@@ -93,8 +96,8 @@ public class GameController : MonoBehaviour {
 		finalScore += score;
 		score = 0;
 		scoreTarget *= 2;
-		ui.hud.OnLevelUp (currentLevel);
-		ui.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
+        uiDefault.hud.OnLevelUp(currentLevel);
+        uiDefault.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
 	}
 
 	// Update is called once per frame
@@ -110,6 +113,13 @@ public class GameController : MonoBehaviour {
 				if (score >= scoreTarget) {
 					LevelUp ();
 				}
+                invulnerability -= ApplyTimeScale(0.1f);
+                damage -= ApplyTimeScale(0.1f);
+
+                if (invulnerability < 0)
+                    invulnerability = 0.0f;
+                if (damage < 0)
+                    damage = 0.0f;
 			}
 		}
 		if (nextGameState != GameState.NONE && ui.uiLocked == false) {
@@ -121,9 +131,9 @@ public class GameController : MonoBehaviour {
 				Time.timeScale = 1.0f;
 				ResetGame ();
                 uiDefault.HideAll();
-				ui.ShowGameStatePanel (nextGameState);
+                uiDefault.ShowGameStatePanel(nextGameState);
 				ui.FadeOut ();
-				ui.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
+				//ui.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
 				break;
 			case GameState.MAIN_MENU:
 				ResetGame();
@@ -147,7 +157,7 @@ public class GameController : MonoBehaviour {
 			gameState = nextGameState;
 			nextGameState = GameState.NONE;
 		}
-		ui.hud.UpdateHUD (this);
+        uiDefault.hud.UpdateHUD(this);
 	}
 
 	public void ResetGame() {
@@ -156,6 +166,8 @@ public class GameController : MonoBehaviour {
 		finalScore = 0.0f;
 		score = 0.0f;
 		scoreTarget = 100.0f;
+        damage = 0.0f;
+        invulnerability = 0.0f;
 		moveSpeedY = defMoveSpeedY;
 		player.transform.position = playerSpawn.transform.position;
 		//player.GetComponent<Rigidbody> ().Sleep ();
@@ -178,9 +190,12 @@ public class GameController : MonoBehaviour {
 	// Main callbacks
 	public void OnPlayerCollision() {
 		// Apply gameover
-		if (gameState != GameState.PLAYING)
+        if (gameState != GameState.PLAYING || invulnerability > 0.0f)
 			return;
-		nextGameState = GameState.GAMEOVER;
+        damage += Random.Range(20.0f, 30.0f);
+        invulnerability = 1.0f;
+        if (damage > 100.0f)
+    		nextGameState = GameState.GAMEOVER;
 	}
 
 	// Menu callbacks

@@ -6,9 +6,10 @@ public class HUDController : MonoBehaviour {
 	
 	// UI HUD
 	public GameObject speedValue;
-	public GameObject timeValue;
 	public GameObject levelValue;
 	public GameObject levelBar;
+    public GameObject damageBar;
+    public GameObject damageValue;
 
 	public GameObject gameOverSpeedValue;
 	public GameObject gameOverTimeValue;
@@ -60,19 +61,22 @@ public class HUDController : MonoBehaviour {
 
 	// Update is called once per frame
 	public void UpdateHUD (GameController gc) {
-		string timeText;
+		string dmgText;
 		string speedText;
 		
-		timeText = string.Format("{0:00}:{1:00}", Mathf.Floor(gc.timeSpent), (Mathf.Floor(gc.timeSpent  * 100)) % 100);
 		speedText = string.Format("{0:000}.{1:00}", Mathf.Floor(gc.moveSpeedY * 15.0f), (Mathf.Floor(gc.moveSpeedY * 1500.0f)) % 100);
 		speedValue.GetComponent<Text>().text = speedText;
-		timeValue.GetComponent<Text>().text = timeText;
+
+        dmgText = string.Format("{0}", Mathf.Floor(gc.damage));
+        damageValue.GetComponent<Text>().text = dmgText;
 		
 		// Update the bar
-		RectTransform barTr = levelBar.GetComponent<RectTransform> ();
-		float ratio = gc.score / gc.scoreTarget;
+        levelBar.GetComponent<Image>().fillAmount = (gc.score / gc.scoreTarget) / 2.0f;
+        damageBar.GetComponent<Image>().fillAmount = (gc.damage / gc.maxDamage) / 2.0f;
+        /*RectTransform barTr = levelBar.GetComponent<RectTransform> ();
+        float ratio = gc.score / gc.scoreTarget;
 		
-		barTr.anchoredPosition = new Vector2 (120.0f * ratio, barTr.anchoredPosition.y);
-		barTr.sizeDelta = new Vector2 (240.0f * ratio, barTr.sizeDelta.y);
+        barTr.anchoredPosition = new Vector2 (120.0f * ratio, barTr.anchoredPosition.y);
+        barTr.sizeDelta = new Vector2 (240.0f * ratio, barTr.sizeDelta.y);*/
 	}
 }
