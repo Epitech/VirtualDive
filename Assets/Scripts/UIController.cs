@@ -16,9 +16,15 @@ public class UIController : MonoBehaviour {
 	public GameObject panelGameOver;
 	public GameObject panelMainMenu;
 	public GameObject panelFade;
+    public GameObject panelOptions;
     public GameObject oculusPanelFade;
 
 	public HUDController hud;
+
+    private string inputTargetBtn = "LeftSide/Buttons/InputBtn/Values";
+    private string soundTargetBtn = "LeftSide/Buttons/SoundBtn/Values";
+    private string musicTargetBtn = "LeftSide/Buttons/MusicBtn/Values";
+    private string sensibTargetBtn = "LeftSide/Buttons/SensibilityBtn/Values";
 
 	// When a fading is in progress, lock ui states
 	public bool uiLocked = false;
@@ -36,6 +42,7 @@ public class UIController : MonoBehaviour {
 		panelPause.SetActive (false);
 		panelGameOver.SetActive (false);
 		panelMainMenu.SetActive (false);
+        panelOptions.SetActive(false);
 	}
 
 	public void ShowGameStatePanel(GameState state) {
@@ -43,8 +50,17 @@ public class UIController : MonoBehaviour {
 		case GameState.MAIN_MENU:
 			HideAll ();
 			panelMainMenu.SetActive(true);
+            events.SetSelectedGameObject(
+                panelMainMenu.transform.Find("LeftSide/Buttons/PlayBtn").gameObject);
             break;
-		case GameState.GAMEOVER:
+        case GameState.OPTIONS:
+            HideAll();
+            panelOptions.SetActive(true);
+            UpdateAllUI();
+            events.SetSelectedGameObject(
+                panelOptions.transform.Find("LeftSide/Buttons/InputBtn").gameObject);
+            break;
+        case GameState.GAMEOVER:
 			HideAll ();
 			panelGameOver.SetActive(true);
 			FadeGameOverBg();
@@ -117,4 +133,56 @@ public class UIController : MonoBehaviour {
 		state = FadeState.NONE;
         
 	}
+
+    public void UpdateAllUI()
+    {
+        UpdateOptionsUI(panelOptions.transform.Find(soundTargetBtn), GameController.soundState ? 1 : 0);
+        UpdateOptionsUI(panelOptions.transform.Find(musicTargetBtn), GameController.musicState ? 1 : 0);
+        UpdateOptionsUI(panelOptions.transform.Find(inputTargetBtn), (int)GameController.activeInput);
+        UpdateOptionsUI(panelOptions.transform.Find(sensibTargetBtn), (int)GameController.sensibility);  
+    }
+
+    public void ToggleSound()
+    {
+        GameController.soundState = !GameController.soundState;
+        UpdateOptionsUI(panelOptions.transform.Find(soundTargetBtn), GameController.soundState ? 1 : 0);
+    }
+
+    public void ToggleMusic()
+    {
+        GameController.musicState = !GameController.musicState;
+        UpdateOptionsUI(panelOptions.transform.Find(musicTargetBtn), GameController.musicState ? 1 : 0);
+    }
+
+    public void ToggleInput()
+    {
+        GameController.activeInput++;
+        if (GameController.activeInput >= InputType.MAX)
+            GameController.activeInput = 0;
+        UpdateOptionsUI(panelOptions.transform.Find(inputTargetBtn), (int)GameController.activeInput);
+    }
+
+    public void ToggleSensibility()
+    {
+        GameController.sensibility++;
+        if (GameController.sensibility >= Sensibility.MAX)
+            GameController.sensibility = 0;
+        UpdateOptionsUI(panelOptions.transform.Find(sensibTargetBtn), (int)GameController.sensibility);
+    }
+
+    void UpdateOptionsUI(Transform values, int val)
+    {
+        foreach (Transform tr in values)
+        {
+            if (int.Parse(tr.name) == val)
+            {
+                tr.gameObject.SetActive(true);
+            }
+            else
+            {
+                tr.gameObject.SetActive(false);
+            }
+        }
+    }
+
 }

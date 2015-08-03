@@ -6,26 +6,31 @@ public class PlayerCollision : MonoBehaviour {
 	public GameController gc;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
 	
 	}
 
+    //TODO: fix colliders and add rigid bodies to prevent compound colliders
     void OnControllerColliderHit(ControllerColliderHit hitcol)
     {
         Collider col = hitcol.collider;
         Debug.Log("Collision");
+
         if (col.tag == "Collider")
         {
 			gc.OnPlayerCollision();
 		}
 	}
 
-	void OnTriggerExit() {
+	void OnTriggerExit() 
+    {
 
 	}
 }

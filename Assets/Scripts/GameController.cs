@@ -6,10 +6,25 @@ using VR = UnityEngine.VR;
 public enum GameState {
 	NONE,
 	MAIN_MENU,
+    OPTIONS,
 	PLAYING,
 	PAUSED,
 	GAMEOVER
 };
+
+public enum InputType {
+    GYRO = 0,
+    TOUCH = 1,
+    DPAD = 2,
+    MAX
+};
+
+public enum Sensibility {
+    LOW = 0,
+    MEDIUM = 1,
+    HIGH = 2,
+    MAX
+}
 
 public class GameController : MonoBehaviour {
 	
@@ -51,6 +66,11 @@ public class GameController : MonoBehaviour {
 	public static GameState gameState = GameState.NONE;
 	public static GameState nextGameState = GameState.MAIN_MENU;
 	public static bool isPaused = true;
+
+    public static bool soundState = true;
+    public static bool musicState = true;
+    public static Sensibility sensibility = Sensibility.LOW;
+    public static InputType activeInput = InputType.TOUCH;
 
 	public bool enableRift = true;
 
@@ -177,6 +197,7 @@ public class GameController : MonoBehaviour {
 		//player.GetComponent<Rigidbody> ().Sleep ();
 		generator.Clear ();
 		generator.InitialSpawn ();
+        player.GetComponent<MovementController>().Reposition();
 	}
 
 	public void TogglePause() {
@@ -242,6 +263,26 @@ public class GameController : MonoBehaviour {
 		nextGameState = GameState.MAIN_MENU;
 		Debug.Log ("Gamestate swap started to " + nextGameState);
 	}
+
+    public void OnOptionsBackToMainMenuClicked()
+    {
+        if (ui.uiLocked)
+            return;
+        gameState = GameState.MAIN_MENU;
+        ui.HideAll();
+        ui.ShowGameStatePanel(gameState);
+        Debug.Log("Gamestate swap to " + gameState);
+    }
+
+    public void OnOptionsClicked()
+    {
+        if (ui.uiLocked)
+            return;
+        gameState = GameState.OPTIONS;
+        ui.HideAll();
+        ui.ShowGameStatePanel(gameState);
+        Debug.Log("Gamestate swap to " + gameState);
+    }
 
 	public float ApplyTimeScale(float value) {
 		return (Time.deltaTime / (1.0f / 60.0f) * value);
