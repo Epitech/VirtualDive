@@ -26,7 +26,8 @@ public class MovementController : MonoBehaviour {
 			return;
 		if (GameController.isPaused == true)
 			return;
-        charctrl.Move(new Vector3(vec.x * sensibilityInc, 0, vec.z * sensibilityInc));
+        charctrl.Move(new Vector3(vec.x * (sensibilityInc * 0.5f), 0,
+            vec.z * (sensibilityInc * 0.5f)));
 		//body.AddForce(new Vector3(vec.x * 50.0f, 0, vec.z * 50.0f));
 	}
 
@@ -55,6 +56,7 @@ public class MovementController : MonoBehaviour {
             charctrl.Move(new Vector3(0, 0, -yVelocity * sensibilityInc));
             //body.AddRelativeForce(new Vector3(0, 0, -yVelocity));
         }
+        charctrl.Move(new Vector3(0, 0, 0.00001f));
     }
 	
     void TouchInputUpdate()
@@ -74,10 +76,10 @@ public class MovementController : MonoBehaviour {
             }
         }
         mv.Normalize();
-        if (mv.x != 0.0f && mv.y != 0.0f)
-        {
+        /*if (mv.x != 0.0f && mv.y != 0.0f)
+        {*/
             charctrl.Move(new Vector3(mv.x * xVelocity * sensibilityInc, 0, mv.y * yVelocity * sensibilityInc));
-        }
+        /*}*/
     }
 
     void GyroUpdate()

@@ -25,8 +25,8 @@ public class UIControllerOculus : MonoBehaviour
         if (UnityEngine.VR.VRDevice.isPresent)
         {
             // Rotate dynamically fixed UI
-            staticController.panelHUD.transform.localRotation = new Quaternion(UnityEngine.VR.InputTracking.GetLocalRotation(0).x * -0.8f,
-                UnityEngine.VR.InputTracking.GetLocalRotation(0).y * -1.2f, 0.0f, 1.0f);
+            /*staticController.panelHUD.transform.localRotation = new Quaternion(UnityEngine.VR.InputTracking.GetLocalRotation(0).x * -0.8f,
+                UnityEngine.VR.InputTracking.GetLocalRotation(0).y * -1.2f, 0.0f, 1.0f);*/
 
             if (!staticController.uiLocked)
             {

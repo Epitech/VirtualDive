@@ -17,6 +17,11 @@ public class HUDController : MonoBehaviour {
 	public GameObject gameOverLevelBar;
 	public GameObject gameOverRecord;
 
+    public Color colorNoDamage;
+    public Color colorDamage;
+    public Color colorDanger;
+    public Color colorOff;
+
 	public HUDCaption hudCaption;
 
 	public void OnLevelUp(int newLevel)
@@ -73,6 +78,45 @@ public class HUDController : MonoBehaviour {
 		// Update the bar
         levelBar.GetComponent<Image>().fillAmount = (gc.score / gc.scoreTarget) / 2.0f;
         damageBar.GetComponent<Image>().fillAmount = (gc.damage / gc.maxDamage) / 2.0f;
+
+        // Update the value positions
+        float levelVal = levelBar.GetComponent<Image>().fillAmount * 2;
+        Vector3 pos;
+        pos = new Vector3(
+            -400.0f * (levelVal * levelVal) + 400.0f * levelVal + 80.0f,
+            270.0f * levelVal - 135.0f,
+            0.0f
+            );
+        speedValue.transform.localPosition = pos;
+
+        float damageVal = damageBar.GetComponent<Image>().fillAmount * 2;
+        pos = new Vector3(
+            420.0f * (damageVal * damageVal) - 420.0f * damageVal - 115.0f,
+            270.0f * damageVal - 135.0f,
+            0.0f
+            );
+        damageValue.transform.localPosition = pos;
+        damageBar.transform.parent.GetComponent<Image>().color = colorOff;
+        if (damageVal > 0)
+        {
+            if (damageVal > 0.68)
+            {
+                damageValue.GetComponent<Text>().color = colorDanger;
+                damageValue.transform.Find("Label Metric").GetComponent<Text>().color = damageValue.GetComponent<Text>().color;
+                damageBar.transform.parent.GetComponent<Image>().color = colorDanger;
+            }
+            else
+            {
+                damageValue.GetComponent<Text>().color = colorDamage;
+                damageValue.transform.Find("Label Metric").GetComponent<Text>().color = damageValue.GetComponent<Text>().color;                
+            }
+        }
+        else
+        {
+            damageValue.GetComponent<Text>().color = colorNoDamage;
+            damageValue.transform.Find("Label Metric").GetComponent<Text>().color = damageValue.GetComponent<Text>().color;
+        }
+
         /*RectTransform barTr = levelBar.GetComponent<RectTransform> ();
         float ratio = gc.score / gc.scoreTarget;
 		
