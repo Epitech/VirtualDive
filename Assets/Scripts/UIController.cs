@@ -17,6 +17,7 @@ public class UIController : MonoBehaviour {
 	public GameObject panelMainMenu;
 	public GameObject panelFade;
     public GameObject panelOptions;
+    public GameObject panelScores;
     public GameObject oculusPanelFade;
 
 	public HUDController hud;
@@ -43,6 +44,7 @@ public class UIController : MonoBehaviour {
 		panelGameOver.SetActive (false);
 		panelMainMenu.SetActive (false);
         panelOptions.SetActive(false);
+        panelScores.SetActive(false);
 	}
 
 	public void ShowGameStatePanel(GameState state) {
@@ -59,6 +61,13 @@ public class UIController : MonoBehaviour {
             UpdateAllUI();
             events.SetSelectedGameObject(
                 panelOptions.transform.Find("LeftSide/Buttons/InputBtn").gameObject);
+            break;
+        case GameState.SCORE:
+            HideAll();
+            panelScores.SetActive(true);
+            UpdateAllUI();
+            events.SetSelectedGameObject(
+                panelScores.transform.Find("LeftSide/Buttons/TypeBtn").gameObject);
             break;
         case GameState.GAMEOVER:
 			HideAll ();

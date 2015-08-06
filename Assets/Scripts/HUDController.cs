@@ -10,6 +10,7 @@ public class HUDController : MonoBehaviour {
 	public GameObject levelBar;
     public GameObject damageBar;
     public GameObject damageValue;
+    public GameObject warningBoxLeft;
 
 	public GameObject gameOverSpeedValue;
 	public GameObject gameOverTimeValue;
@@ -24,6 +25,8 @@ public class HUDController : MonoBehaviour {
 
 	public HUDCaption hudCaption;
 
+    public float damageVal = 0.0f;
+
 	public void OnLevelUp(int newLevel)
 	{		
 		levelValue.GetComponent<Text>().text = "LEVEL " + newLevel;
@@ -36,6 +39,7 @@ public class HUDController : MonoBehaviour {
 	}
 
 	void Update() {
+
 	}
 
 	public void OnShow() {
@@ -68,16 +72,18 @@ public class HUDController : MonoBehaviour {
 	public void UpdateHUD (GameController gc) {
 		string dmgText;
 		string speedText;
+
+        damageVal = Mathf.Lerp(damageVal, gc.damage, 0.3f);
 		
 		speedText = string.Format("{0:000}.{1:00}", Mathf.Floor(gc.moveSpeedY * 15.0f), (Mathf.Floor(gc.moveSpeedY * 1500.0f)) % 100);
 		speedValue.GetComponent<Text>().text = speedText;
 
-        dmgText = string.Format("{0}", Mathf.Floor(gc.damage));
+        dmgText = string.Format("{0}", Mathf.Floor(damageVal));
         damageValue.GetComponent<Text>().text = dmgText;
 		
 		// Update the bar
         levelBar.GetComponent<Image>().fillAmount = (gc.score / gc.scoreTarget) / 2.0f;
-        damageBar.GetComponent<Image>().fillAmount = (gc.damage / gc.maxDamage) / 2.0f;
+        damageBar.GetComponent<Image>().fillAmount = (damageVal / gc.maxDamage) / 2.0f;
 
         // Update the value positions
         float levelVal = levelBar.GetComponent<Image>().fillAmount * 2;
@@ -89,32 +95,35 @@ public class HUDController : MonoBehaviour {
             );
         speedValue.transform.localPosition = pos;
 
-        float damageVal = damageBar.GetComponent<Image>().fillAmount * 2;
+        float damageValRadius = damageBar.GetComponent<Image>().fillAmount * 2;
         pos = new Vector3(
-            420.0f * (damageVal * damageVal) - 420.0f * damageVal - 115.0f,
-            270.0f * damageVal - 135.0f,
+            420.0f * (damageValRadius * damageValRadius) - 420.0f * damageValRadius - 115.0f,
+            270.0f * damageValRadius - 135.0f,
             0.0f
             );
         damageValue.transform.localPosition = pos;
         damageBar.transform.parent.GetComponent<Image>().color = colorOff;
-        if (damageVal > 0)
+        if (damageValRadius > 0)
         {
-            if (damageVal > 0.68)
+            if (damageValRadius > 0.68)
             {
                 damageValue.GetComponent<Text>().color = colorDanger;
                 damageValue.transform.Find("Label Metric").GetComponent<Text>().color = damageValue.GetComponent<Text>().color;
                 damageBar.transform.parent.GetComponent<Image>().color = colorDanger;
+                warningBoxLeft.SetActive(true);
             }
             else
             {
                 damageValue.GetComponent<Text>().color = colorDamage;
-                damageValue.transform.Find("Label Metric").GetComponent<Text>().color = damageValue.GetComponent<Text>().color;                
+                damageValue.transform.Find("Label Metric").GetComponent<Text>().color = damageValue.GetComponent<Text>().color;
+                warningBoxLeft.SetActive(false);
             }
         }
         else
         {
             damageValue.GetComponent<Text>().color = colorNoDamage;
             damageValue.transform.Find("Label Metric").GetComponent<Text>().color = damageValue.GetComponent<Text>().color;
+            warningBoxLeft.SetActive(false);
         }
 
         /*RectTransform barTr = levelBar.GetComponent<RectTransform> ();

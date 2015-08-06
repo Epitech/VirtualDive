@@ -17,6 +17,16 @@ public class PlayerCollision : MonoBehaviour {
 	
 	}
 
+    void OnTriggerEnter(Collider col)
+    {
+        Debug.Log("Collision");
+
+        if (col.tag == "Collider")
+        {
+            gc.OnPlayerCollision();
+        }
+    }
+
     //TODO: fix colliders and add rigid bodies to prevent compound colliders
     void OnControllerColliderHit(ControllerColliderHit hitcol)
     {

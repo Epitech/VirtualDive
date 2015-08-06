@@ -7,6 +7,7 @@ public enum GameState {
 	NONE,
 	MAIN_MENU,
     OPTIONS,
+    SCORE,
 	PLAYING,
 	PAUSED,
 	GAMEOVER
@@ -29,6 +30,7 @@ public enum Sensibility {
 public class GameController : MonoBehaviour {
 	
 	public Generator generator;
+    public GameDataController gameDataSerializer;
 
 	public GameObject cameraDefault;
 	public GameObject cameraOculus;
@@ -49,6 +51,8 @@ public class GameController : MonoBehaviour {
 	public float offsetY;
 	public float moveSpeedIncr = 0.0035f;
     public float invulnerability = 0.0f;
+    public float hitDelay = 0.0f;
+    public float defHitDelay = 2.0f;
 
 	public int currentLevel = 1;
 	public float timeSpent = 0.0f;
@@ -76,6 +80,9 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        gameDataSerializer = new GameDataController();
+        gameDataSerializer.LoadGamedata(this);
 
         // Conditionnal - Android setup
         if (Application.platform == RuntimePlatform.Android)
@@ -138,11 +145,24 @@ public class GameController : MonoBehaviour {
 				if (score >= scoreTarget) {
 					LevelUp ();
 				}
-                invulnerability -= ApplyTimeScale(0.1f);
-                damage -= ApplyTimeScale(0.1f);
 
+                // Invulnerability reduction
+                invulnerability -= ApplyTimeScale(1.0f / 60.0f);
                 if (invulnerability < 0)
                     invulnerability = 0.0f;
+
+                // Damage time reduction
+                if (hitDelay == 0.0f)
+                {
+                    damage -= ApplyTimeScale(10.0f / 60.0f);
+                }
+                else
+                {
+                    hitDelay -= ApplyTimeScale(1.0f / 60.0f);
+                    if (hitDelay < 0.0f)
+                        hitDelay = 0.0f;
+                }
+
                 if (damage < 0)
                     damage = 0.0f;
 			}
@@ -174,6 +194,7 @@ public class GameController : MonoBehaviour {
                 ui.HideAll();
                 ui.ShowGameStatePanel(nextGameState);
 				ui.hud.UpdateGameOverHUD(this);
+                gameDataSerializer.SaveGamedata(this);
 				break;
 			default:
 				break;
@@ -218,7 +239,8 @@ public class GameController : MonoBehaviour {
         if (gameState != GameState.PLAYING || invulnerability > 0.0f)
 			return;
         damage += Random.Range(20.0f, 30.0f);
-        invulnerability = 1.0f;
+        hitDelay = defHitDelay;
+        invulnerability = 0.3f;
         if (damage > 100.0f)
     		nextGameState = GameState.GAMEOVER;
 	}
@@ -279,6 +301,26 @@ public class GameController : MonoBehaviour {
         if (ui.uiLocked)
             return;
         gameState = GameState.OPTIONS;
+        ui.HideAll();
+        ui.ShowGameStatePanel(gameState);
+        Debug.Log("Gamestate swap to " + gameState);
+    }
+
+    public void OnScoresClicked()
+    {
+        if (ui.uiLocked)
+            return;
+        gameState = GameState.SCORE;
+        ui.HideAll();
+        ui.ShowGameStatePanel(gameState);
+        Debug.Log("Gamestate swap to " + gameState);
+    }
+
+    public void OnLeaderboardClicked()
+    {
+        if (ui.uiLocked)
+            return;
+        gameState = GameState.SCORE;
         ui.HideAll();
         ui.ShowGameStatePanel(gameState);
         Debug.Log("Gamestate swap to " + gameState);
