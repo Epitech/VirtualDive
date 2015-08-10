@@ -22,6 +22,8 @@ public class OVRCharacterController : MonoBehaviour {
 	void Update () {
 		if (!OVRManager.tracker.isPresent)
 			return;
+        if (mvtCtrl.isMovementAllowed == false)
+            return;
 
 		Vector3 poseTracker = VR.InputTracking.GetLocalPosition (VR.VRNode.Head);
 		Vector3 pose = TrackerPosToUnity(poseTracker.x, poseTracker.y, poseTracker.z) - startPos;

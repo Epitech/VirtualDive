@@ -11,6 +11,8 @@ public class MovementController : MonoBehaviour {
 
     public float[] sensibilityIncValues;
 
+    public bool isMovementAllowed;
+
 	//private Rigidbody body;
     private CharacterController charctrl;
 
@@ -101,8 +103,10 @@ public class MovementController : MonoBehaviour {
 	void Update () {
         if (GameController.gameState != GameState.PLAYING)
 			return;
-		if (GameController.isPaused == true)
-			return;
+        if (GameController.isPaused == true)
+            return;
+        if (isMovementAllowed == false)
+            return;
 
         sensibilityInc = sensibilityIncValues[(int)GameController.sensibility];
 

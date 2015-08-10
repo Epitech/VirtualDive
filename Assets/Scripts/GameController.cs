@@ -85,7 +85,7 @@ public class GameController : MonoBehaviour {
     // After start cinematic is done
     void OnStartCinematicFinished()
     {
-
+        player.GetComponent<MovementController>().isMovementAllowed = true;
     }
 
 	// Use this for initialization
@@ -188,6 +188,7 @@ public class GameController : MonoBehaviour {
                 ui.HideAll();
                 ui.ShowGameStatePanel(nextGameState);
 				ui.FadeOut ();
+                player.GetComponent<MovementController>().isMovementAllowed = false;
                 cinematicsController.RunAnimation(player, startAnimation, OnStartCinematicFinished);
 				//ui.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
 				break;
