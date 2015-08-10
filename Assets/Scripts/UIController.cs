@@ -125,8 +125,32 @@ public class UIController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//events = transform.FindChild ("EventSystem").GetComponent<EventSystem>();
+        RepositionUIByResolution();
 	}
 	
+    void RepositionUIByResolution()
+    {
+        float scrW = Screen.width;
+        float scrH = Screen.height;
+        float scrRatio = scrW / scrH;
+        float uiW = GameObject.Find("UIs/UI/Canvas").GetComponent<RectTransform>().rect.width;
+        float uiH = GameObject.Find("UIs/UI/Canvas").GetComponent<RectTransform>().rect.height;
+        float uiRatio = uiW / uiH;
+        Vector3 pos = GameObject.Find("UIs/UI/Canvas").transform.localPosition;
+
+        Debug.Log("ScrRatio=" + scrRatio + " - UIRatio=" + uiRatio);
+        if (scrRatio < uiRatio)
+        {
+            pos.z = (uiRatio - scrRatio) * 80.0f;
+        }
+        else
+        {
+            pos.z = 0;
+        }
+        GameObject.Find("UIs/UI/Canvas").transform.localPosition = pos;
+
+    }
+
 	// Update is called once per frame
 	void Update () {
 		switch (state) {

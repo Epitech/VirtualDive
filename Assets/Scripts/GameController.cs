@@ -66,6 +66,10 @@ public class GameController : MonoBehaviour {
 	private float defMoveSpeedY;
 	private float defMoveSpeedIncr;
 
+    // Cinematic animations parameters
+    public CinematicController cinematicsController;
+    public AnimationClip startAnimation;
+
 	// Global static informations
 	public static GameState gameState = GameState.NONE;
 	public static GameState nextGameState = GameState.MAIN_MENU;
@@ -77,6 +81,12 @@ public class GameController : MonoBehaviour {
     public static InputType activeInput = InputType.TOUCH;
 
 	public bool enableRift = true;
+
+    // After start cinematic is done
+    void OnStartCinematicFinished()
+    {
+
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -178,6 +188,7 @@ public class GameController : MonoBehaviour {
                 ui.HideAll();
                 ui.ShowGameStatePanel(nextGameState);
 				ui.FadeOut ();
+                cinematicsController.RunAnimation(player, startAnimation, OnStartCinematicFinished);
 				//ui.hud.hudCaption.Show("Level " + currentLevel, generator.activeWorld.name);
 				break;
 			case GameState.MAIN_MENU:
