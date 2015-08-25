@@ -12,6 +12,7 @@ public class WorldRecordData
     { 
     }
 
+    public string name = "";
     public float topSpeed = 0.0f;
     public float topTime = 0.0f;
     public float topScore = 0.0f;
@@ -32,6 +33,16 @@ public class GameData
 public class GameDataController
 {
     public GameData data;
+
+    public WorldRecordData GetWorldRecord(string world)
+    {
+        foreach (WorldRecordData rd in data.worldRecords)
+        {
+            if (rd.name == world)
+                return (rd);
+        }
+        return (null);
+    }
 
     public void Pack(GameController gc)
     {
