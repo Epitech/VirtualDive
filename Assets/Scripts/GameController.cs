@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
 {
 
     public Generator generator;
-    public GameDataController gameDataSerializer;
+    public GameDataController persistantGameData;
     public LeaderboardsController leaderboards;
 
     public GameObject cameraDefault;
@@ -100,12 +100,21 @@ public class GameController : MonoBehaviour
         player.GetComponent<MovementController>().isMovementAllowed = true;
     }
 
+
+    void MarkAsNewRecord(bool res)
+    {
+        ui.hud.gameOverRecord.SetActive(false);
+        if (res)
+        {
+            ui.hud.gameOverRecord.SetActive(true);
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
-
-        gameDataSerializer = new GameDataController();
-        gameDataSerializer.LoadGamedata(this);
+        persistantGameData = new GameDataController();
+        persistantGameData.LoadGamedata(this);
         leaderboards.localDataController = gameDataSerializer;
 
         // Conditionnal - Android setup
@@ -235,11 +244,14 @@ public class GameController : MonoBehaviour
                     ui.FadeOut();
                     break;
                 case GameState.GAMEOVER:
+                    bool isNewRecord = persistantGameData.SaveActiveScore(generator.activeWorld.name, this);
+
                     isPaused = true;
                     Time.timeScale = 1.0f;
                     ui.HideAll();
                     ui.ShowGameStatePanel(nextGameState);
                     ui.hud.UpdateGameOverHUD(this);
+                    MarkAsNewRecord(isNewRecord);
                     gameDataSerializer.SaveGamedata(this);
                     break;
                 default:
@@ -248,6 +260,7 @@ public class GameController : MonoBehaviour
             gameState = nextGameState;
             nextGameState = GameState.NONE;
         }
+
         ui.hud.UpdateHUD(this);
     }
 

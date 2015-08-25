@@ -19,8 +19,6 @@ public class PlayerCollision : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        Debug.Log("Collision");
-
         if (col.tag == "Collider")
         {
             gc.OnPlayerCollision();

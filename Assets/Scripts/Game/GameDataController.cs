@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+//using UnityEditor;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
@@ -11,8 +11,14 @@ public class WorldRecordData
     public WorldRecordData() 
     { 
     }
-
+    
     public string name = "";
+
+    public void LogDebug()
+    {
+        Debug.Log("WorldRecordData: " + name + " sp="+topSpeed+", t="+topTime+", sc="+topScore);
+    }
+
     public float topSpeed = 0.0f;
     public float topTime = 0.0f;
     public float topScore = 0.0f;
@@ -44,15 +50,61 @@ public class GameDataController
         return (null);
     }
 
+    public WorldRecordData GetWorldRecordByName(string name)
+    {
+        foreach (WorldRecordData wd in data.worldRecords)
+        {
+            if (wd.name == name)
+                return (wd);
+        }
+        return (null);
+    }
+
+    public bool SaveActiveScore(string worldName, GameController gc)
+    {
+        WorldRecordData wd = GetWorldRecordByName(worldName);
+        bool newRecord = false;
+        float sc = ScoreController.GetScore(gc.moveSpeedY, gc.timeSpent, gc.finalScore, gc.score);
+
+        if (wd == null)
+        {
+            wd = new WorldRecordData();
+            wd.name = worldName;
+            data.worldRecords.Add(wd);
+        }
+        if (gc.moveSpeedY > wd.topSpeed)
+        {
+            wd.topSpeed = gc.moveSpeedY;
+            newRecord = true;
+        }
+        if (gc.timeSpent > wd.topTime)
+        {
+            wd.topTime = gc.timeSpent;
+            newRecord = true;
+        }
+        if (sc > wd.topScore)
+        {
+            wd.topScore = sc;
+            newRecord = true;
+        }
+        return (newRecord);
+    }
+
     public void Pack(GameController gc)
     {
-        data = new GameData();
-        data.userLevel = 1;
+        //data = new GameData();
+        //data.userLevel = 1;
+        //foreach (WorldGenerationPossibility wc in gc.generator.worlds)
+        //{
+        //}
     }
 
     public void Unpack(GameController gc)
     {
-
+        foreach (WorldRecordData dt in data.worldRecords)
+        {
+            dt.LogDebug();
+        }
     }
 
     public void SaveGamedata(GameController gc)
