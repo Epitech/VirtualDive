@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using System.Collections;
 using DG.Tweening;
 
@@ -27,4 +27,4 @@ public class Basics : MonoBehaviour
 		// Voilà.
 		// To see all available shortcuts check out DOTween's online documentation.
 	}
-}
+}*/

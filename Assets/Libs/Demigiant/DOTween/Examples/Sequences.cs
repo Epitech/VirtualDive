@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using System.Collections;
 using DG.Tweening;
 
@@ -32,4 +32,4 @@ public class Sequences : MonoBehaviour
 		// Oh, and let's also make the whole Sequence loop backward and forward 4 times
 		mySequence.SetLoops(4, LoopType.Yoyo);
 	}
-}
+}*/
