@@ -115,7 +115,7 @@ public class GameController : MonoBehaviour
     {
         persistantGameData = new GameDataController();
         persistantGameData.LoadGamedata(this);
-        leaderboards.localDataController = gameDataSerializer;
+        leaderboards.localDataController = persistantGameData;
 
         // Conditionnal - Android setup
         if (Application.platform == RuntimePlatform.Android)
@@ -252,7 +252,7 @@ public class GameController : MonoBehaviour
                     ui.ShowGameStatePanel(nextGameState);
                     ui.hud.UpdateGameOverHUD(this);
                     MarkAsNewRecord(isNewRecord);
-                    gameDataSerializer.SaveGamedata(this);
+                    persistantGameData.SaveGamedata(this);
                     break;
                 default:
                     break;

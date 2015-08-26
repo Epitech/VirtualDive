@@ -186,7 +186,7 @@ public class Generator : MonoBehaviour {
 			new Vector3(0, BlockUtils.GetLowerBoundValue(lowestBlock), 0) - 
 			new Vector3(0, BlockUtils.GetUpperBoundValue(obj), 0);
 		obj.transform.SetParent (spawnParent.transform);
-		//obj.transform.Rotate (new Vector3 (0, rotation, 0));
+		obj.transform.Rotate (new Vector3 (0, 90, 0));
 	}
 
 	public World SetNewWorld() {
