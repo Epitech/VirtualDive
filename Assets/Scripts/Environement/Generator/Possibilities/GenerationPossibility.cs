@@ -31,9 +31,14 @@ public class GenerationPossibility<T> {
 		if (iterationsBeforeNextGenerationActive != 0)
 			--iterationsBeforeNextGenerationActive;
 	}
-	
+
+    public bool LevelValid(int activeLevel)
+    {
+        return ((activeLevel >= minLevel && (activeLevel <= maxLevel || maxLevel == 0)));
+    }
+
 	public bool CanGenerate(int randChance, int activeLevel, GameObject blockReference) {
 		return (iterationsBeforeNextGenerationActive == 0 && randChance < chance &&
-		        activeLevel >= minLevel && activeLevel <= maxLevel);
+                LevelValid(activeLevel));
 	}
 }

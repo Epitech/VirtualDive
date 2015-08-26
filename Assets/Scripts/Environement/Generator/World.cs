@@ -13,7 +13,7 @@ public class World {
 	public GameObject topConnector;
 
 	// Connection element on bottom for other worlds
-	public GameObject bottomConnector;
+    public ObjectGenerationPossibility[] bottomConnector;
 
 	// Elements that can be generated for this world
 	public ObjectGenerationPossibility[] blockPrefabs;
@@ -52,6 +52,33 @@ public class World {
 		return (false);
 	}
 
+    // Generate a block connector
+    public GameObject GenerateConnector()
+    {
+        GameObject prefab = null;
+        int maxIt = 50;
+
+        while (maxIt != 0 && prefab == null)
+        {
+            ObjectGenerationPossibility goc = bottomConnector[Random.Range(0, bottomConnector.Length)];
+            --maxIt;
+            if (goc.CanGenerate(Random.Range(0, 100), generator.controller.currentLevel, generator.lowestBlock))
+            {
+                goc.ResetGenerateChance();
+                prefab = goc.blueprint;
+            }
+        }
+        if (maxIt == 0)
+        {
+            throw new UnityException("Generation iterations maximum of 50 reached - Invalid generation settings detected - Preventing inf. loop");
+        }
+
+        GameObject obj = GameObject.Instantiate<GameObject>(prefab);
+        UpdateBlocksGenerationChance();
+        generatedCount++;
+        return (obj);
+    }
+
 	// Generate a block
 	public GameObject GenerateBlock() {
 		GameObject prefab = null;
@@ -71,6 +98,7 @@ public class World {
 		
 		GameObject obj = GameObject.Instantiate<GameObject>(prefab);
 		UpdateBlocksGenerationChance ();
+        generatedCount++;
 		return (obj);
 	}
 

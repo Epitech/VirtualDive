@@ -27,7 +27,9 @@ public class Generator : MonoBehaviour {
 	public float rotation;
 
 	// Active generation world
-	public World activeWorld;
+    public WorldGenerationPossibility activeWorldGen;
+    public World activeWorld;
+    public bool worldSwap;
 
 	// Entity spawn location
 	public GameObject spawnLocation;
@@ -161,11 +163,30 @@ public class Generator : MonoBehaviour {
 		if (activeWorld == null)
 			return ;
 		if (activeWorld.CanGenerateBlock ()) {
-			GameObject obj = activeWorld.GenerateBlock();
+            GameObject obj;
+
+            if (worldSwap)
+            {
+                obj = activeWorld.GenerateConnector();
+            }
+            else
+            {
+                obj = activeWorld.GenerateBlock();
+            }
 			ApplyGenerationParameters(obj);
 			UpdateWorldsGenerationChance();
 			lowestBlock = obj;
             generatedCount++;
+            if (worldSwap)
+            {
+                SetNewWorld();
+                worldSwap = false;
+                generatedCount = 0;
+            }
+            else if (generatedCount > activeWorldGen.iterationsBeforeNextGeneration)
+            {
+                worldSwap = true;
+            }
 			//fatal = true;
 		}
         if (activeWorld.CanGenerateObstacle())
@@ -201,6 +222,7 @@ public class Generator : MonoBehaviour {
 			if (pos.CanGenerate(rnd, controller.currentLevel, lowestBlock)) {
 				pos.ResetGenerateChance();
 				activeWorld = pos.blueprint;
+                activeWorldGen = pos;
 				found = true;
 			}
 		}
