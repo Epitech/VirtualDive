@@ -26,6 +26,11 @@ Unity3D crossplatform
 
 * Load the project with unity after cloning the repository
 
+Development Quality
+-------
+
+Documentation: None - Feel free to make one  
+Code quality: Medium - Prototype, prepared for production development
 
 Dependancies & Engines
 -------
